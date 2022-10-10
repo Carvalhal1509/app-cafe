@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using app_usuario.Models;
 
 namespace ControleDeContatos.Data
 {
@@ -15,7 +14,5 @@ namespace ControleDeContatos.Data
 		}
 
 		public DbSet<ContatoModel> ContatosTeste { get; set; }
-		public DbSet<UsuarioModel> Usuarios { get; set; }
-
 	}
 }
