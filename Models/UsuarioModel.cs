@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace app_cadastro.Models
+namespace app_usuario.Models
 {
     public class UsuarioModel
     {
@@ -16,7 +16,6 @@ namespace app_cadastro.Models
         public string Senha { get; set; }
         public DateTime DataCadastro { get; set; }
         public DateTime? DataAtualizacao { get; set; }
-        public DateTime Aniversario { get; set; }
         public bool StatusExc { get; set; }
 
     }
