@@ -14,6 +14,9 @@ namespace app_cadastro.Models
         public string Nome { get; set; }
         [Required(ErrorMessage ="Digite a Senha")]
         public string Senha { get; set; }
+        [Required(ErrorMessage = "Digite o Login")]
+        public string Login { get; set; }
+
         [Required(ErrorMessage ="Digite o Email")]
         [EmailAddress(ErrorMessage ="O e-mail informado nao é valido!")]
         public string Email { get; set; }

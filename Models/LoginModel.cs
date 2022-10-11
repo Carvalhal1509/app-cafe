@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace app_cadastro.Models
+namespace app_login.Models
 {
     public class LoginModel
     {

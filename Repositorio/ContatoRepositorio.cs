@@ -5,6 +5,8 @@ using ControleDeContatos.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using app_login.Models;
+
 
 namespace app_cadastro.Repositorio
 {
@@ -15,6 +17,11 @@ namespace app_cadastro.Repositorio
         {
             bancoContext1 = bancoContext;
 
+        }
+
+        public ContatoModel BuscarPorLogin(string login)
+        {
+            return bancoContext1.ContatosTeste.FirstOrDefault(x => x.Login.ToUpper() == login);
         }
         public ContatoModel ListarPorId(int id)
         {
@@ -62,5 +69,6 @@ namespace app_cadastro.Repositorio
             return true;
 
         }
+
     }
 }
