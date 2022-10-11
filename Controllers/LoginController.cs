@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using app_cadastro.Repositorio;
+using app_login.Models;
 
 namespace app_cadastro.Controllers
 {
@@ -26,9 +27,17 @@ namespace app_cadastro.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    return RedirectToAction("Index", "Home");
+                    ContatoModel contato = _contatoRepositorio.BuscarPorLogin(loginModel.Login);
+
+                    if (contato != null)
+                    {
+                        if (contato.SenhaValida(loginModel.Senha))
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
+                    }
+                    TempData["MensagemErro"] = $"Senha invalida.Por favor,tente novamente!.";
                 }
-                TempData["MensagemErro"] = $"Usuario e/ou senha invalido(s).Por favor,tente novamente!.";
 
                 return View("index");
             }

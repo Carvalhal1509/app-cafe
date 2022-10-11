@@ -27,9 +27,9 @@ namespace app_cadastro.Models
         [Required(ErrorMessage = "Selecione o Perfil")]
         public PerfilEnum Perfil { get; set; }
         public bool StatusExc { get; set; }
-
-
-
-
+        public bool SenhaValida(string senha)
+        {
+            return Senha == senha;
+         }
     }
 }
