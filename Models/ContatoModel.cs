@@ -1,4 +1,5 @@
-﻿using System;
+﻿using app_cadastro.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace app_cadastro.Models
         [Phone(ErrorMessage ="O celular informado não é valido!")]
         public string Celular { get; set; }
         public DateTime Aniversario { get; set; }
+        public PerfilEnum Perfil { get; set; }
         public bool StatusExc { get; set; }
 
 

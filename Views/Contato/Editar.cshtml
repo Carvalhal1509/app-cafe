@@ -1,4 +1,5 @@
-﻿@model ContatoModel
+﻿@using app_cadastro.Enums;
+@model ContatoModel
 @{
     ViewData["Title"] = "editar contato";
 
@@ -11,35 +12,45 @@
 </div>
 
 <form asp-controller="Contato" asp-action="Alterar" method="post">
-<input type="hidden" asp-for="Id"/>
+    <input type="hidden" asp-for="Id" />
 
-<div class="form-group">
-    <label>Nome</label>
-    <input type="text" asp-for="Nome" class="form-control">
-    @Html.ValidationMessageFor(x => x.Nome)
-</div>
+    <div class="form-group">
+        <label>Nome</label>
+        <input type="text" asp-for="Nome" class="form-control">
+        @Html.ValidationMessageFor(x => x.Nome)
+    </div>
 
-<div class="form-group">
-    <label>Senha</label>
-    <input type="password" asp-for="Senha" class="form-control">
-    @Html.ValidationMessageFor(x => x.Senha)
-</div>
+    <div class="form-group">
+        <label>Senha</label>
+        <input type="password" asp-for="Senha" class="form-control">
+        @Html.ValidationMessageFor(x => x.Senha)
+    </div>
 
-<div class="form-group">
-    <label>Email</label>
-    <input type="text" asp-for="Email" class="form-control">
-    @Html.ValidationMessageFor(x => x.Email)
-</div>
+    <div class="form-group">
+        <label>Email</label>
+        <input type="text" asp-for="Email" class="form-control">
+        @Html.ValidationMessageFor(x => x.Email)
+    </div>
 
-<div class="form-group">
-    <label>Celular</label>
-    <input type="text" asp-for="Celular" class="form-control">
-    @Html.ValidationMessageFor(x => x.Celular)
-</div>
-            
-<div class="btn-group" role="group">
-    <a class="btn btn-light btn-lg" role="button" asp-controller="Contato" asp-action="Index">Voltar</a>
-    <button type="submit" class="btn btn-warning btn-lg ms-2">Continuar</button>
-</div>
+    <div class="form-group">
+        <label>Celular</label>
+        <input type="text" asp-for="Celular" class="form-control">
+        @Html.ValidationMessageFor(x => x.Celular)
+    </div>
+
+    <div class="form-group">
+        <label for="nome" class="form-label">Perfil</label>
+        <select asp-for="Perfil" class="form-control">
+            <option value="0">Selecione</option>
+            <option value="@PerfilEnum.Admin">Administrador</option>
+            <option value="@PerfilEnum.Padrao">Padrão</option>
+
+        </select>
+    </div>
+
+    <div class="btn-group" role="group">
+        <a class="btn btn-light btn-lg" role="button" asp-controller="Contato" asp-action="Index">Voltar</a>
+        <button type="submit" class="btn btn-warning btn-lg ms-2">Continuar</button>
+    </div>
 
 </form>
