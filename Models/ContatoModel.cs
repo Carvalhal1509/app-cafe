@@ -21,7 +21,7 @@ namespace app_cadastro.Models
         [Phone(ErrorMessage ="O celular informado não é valido!")]
         public string Celular { get; set; }
         public DateTime Aniversario { get; set; }
-        public PerfilEnum? Perfil { get; set; }
+        public PerfilEnum Perfil { get; set; }
         public bool StatusExc { get; set; }
 
 
