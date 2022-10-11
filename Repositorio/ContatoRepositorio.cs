@@ -41,6 +41,7 @@ namespace app_cadastro.Repositorio
             contatoDb.Senha = contato.Senha;
             contatoDb.Email = contato.Email;
             contatoDb.Celular = contato.Celular;
+            contatoDb.Perfil = contato.Perfil;
 
             bancoContext1.ContatosTeste.Update(contatoDb);
             bancoContext1.SaveChanges();

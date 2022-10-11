@@ -9,6 +9,5 @@ namespace app_cadastro.Enums
     {
         Admin = 1,
         Padrao = 2,
-
     }
 }
