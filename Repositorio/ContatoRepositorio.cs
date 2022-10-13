@@ -5,7 +5,7 @@ using ControleDeContatos.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using app_login.Models;
+using app_cadastro.Models;
 
 
 namespace app_cadastro.Repositorio
@@ -45,6 +45,7 @@ namespace app_cadastro.Repositorio
             ContatoModel contatoDb = ListarPorId(contato.Id);
             if (contatoDb == null) throw new System.Exception("Houve um erro na atualizacão dos dados do usuário!");
             contatoDb.Nome = contato.Nome;
+            contatoDb.Login = contatoDb.Login;
             contatoDb.Senha = contato.Senha;
             contatoDb.Email = contato.Email;
             contatoDb.Celular = contato.Celular;

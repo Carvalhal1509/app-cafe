@@ -19,6 +19,11 @@
         <input type="text" asp-for="Nome" class="form-control">
         @Html.ValidationMessageFor(x => x.Nome)
     </div>
+    <div class="form-group">
+        <label>Login</label>
+        <input type="text" asp-for="Login" class="form-control">
+        @Html.ValidationMessageFor(x => x.Login)
+    </div>
 
     <div class="form-group">
         <label>Senha</label>

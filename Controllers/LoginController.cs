@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using app_cadastro.Repositorio;
-using app_login.Models;
+using app_cadastro.Models;
 
 namespace app_cadastro.Controllers
 {
@@ -27,26 +27,29 @@ namespace app_cadastro.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    ContatoModel contato = _contatoRepositorio.BuscarPorLogin(loginModel.Login);
-
+                   ContatoModel contato = _contatoRepositorio.BuscarPorLogin(loginModel.Login);
+                   
                     if (contato != null)
                     {
-                        if (contato.SenhaValida(loginModel.Senha))
-                        {
+                        if(contato.SenhaValida(loginModel.Senha))
+                        { 
                             return RedirectToAction("Index", "Home");
                         }
-                    }
-                    TempData["MensagemErro"] = $"Senha invalida.Por favor,tente novamente!.";
-                }
 
+                        TempData["MensagemErro"] = $"Senha invalida.Por favor,tente novamente!.";
+                    }
+                    TempData["MensagemErro"] = $"Usuario e/ou Senha invalida.Por favor,tente novamente!.";
+                }
                 return View("index");
             }
             catch (Exception erro)
-            {
-                TempData["MensagemErro"] = $"Ops, Não foi possivel realizar o Login,tente novamente!.";
-                return RedirectToAction("Index");
-            }
+            { 
+            TempData["MensagemErro"] = $"Ops, Não foi possivel realizar o Login,tente novamente!.";
         }
-
+   return RedirectToAction("Index");
     }
+   }
 }
+
+
+    
