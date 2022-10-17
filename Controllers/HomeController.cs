@@ -1,11 +1,5 @@
 ﻿using app_cadastro.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace app_cadastro.Controllers
 {
@@ -13,11 +7,7 @@ namespace app_cadastro.Controllers
     {
         public IActionResult Index()
         {
-            HomeModel home = new HomeModel();
-            home.Nome = "Vanessa";
-            home.Email = "vanessa.carvalhal@gmail.com";
-
-            return View(home);
+            return View();
         }
 
      

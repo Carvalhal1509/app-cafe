@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using app_cadastro.Repositorio;
+using Microsoft.AspNetCore.Http;
+using app_cadastro.Helper;
 
 namespace app_cadastro
 {
@@ -29,7 +31,15 @@ namespace app_cadastro
             services.AddControllersWithViews();
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<BancoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DataBase")));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            
             services.AddScoped<IContatoRepositorio, ContatoRepositorio>();
+            services.AddScoped<ISessao, Sessao>();
+            services.AddSession(o =>
+            {
+                o.Cookie.HttpOnly = true;
+                o.Cookie.IsEssential = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +58,7 @@ namespace app_cadastro
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

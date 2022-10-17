@@ -21,6 +21,12 @@ namespace app_cadastro.Controllers
             return View(contato);
         }
 
+        public IActionResult Eventos()
+        {
+            List<ContatoModel> contato = _contatoRepositorio.BuscarTodos();
+            return View(contato);
+        }
+
         public IActionResult Criar()
         {
             return View();

@@ -1,25 +1,33 @@
 ﻿using app_cadastro.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using app_cadastro.Repositorio;
-using app_cadastro.Models;
+using app_cadastro.Helper;
 
 namespace app_cadastro.Controllers
 {
     public class LoginController : Controller
     {
         private readonly IContatoRepositorio _contatoRepositorio;
-        public LoginController(IContatoRepositorio contatoRepositorio)
+        private readonly ISessao _sessao;
+
+        public LoginController(IContatoRepositorio contatoRepositorio,ISessao sessao)
         {
             _contatoRepositorio = contatoRepositorio;
+            _sessao = sessao;
         }
         public IActionResult Index()
-        {
+
+        {//se o usuario estiver logado,redirecionar para a home
+            if (_sessao.BuscarSessaoDoUsuario() != null) return RedirectToAction("Index", "Home");
             return View();
         }
+        public IActionResult Sair()
+        {
+            _sessao.RemoveSessaoDoUsuario();
+            return RedirectToAction("Index", "Login");
+        }
+
         [HttpPost]
         public IActionResult Entrar(LoginModel loginModel)
         {
@@ -32,7 +40,8 @@ namespace app_cadastro.Controllers
                     if (contato != null)
                     {
                         if(contato.SenhaValida(loginModel.Senha))
-                        { 
+                        {
+                            _sessao.CriarSessaoDoUsuario(contato);
                             return RedirectToAction("Index", "Home");
                         }
 
