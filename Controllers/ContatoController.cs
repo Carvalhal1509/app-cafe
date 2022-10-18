@@ -15,11 +15,7 @@ namespace app_cadastro.Controllers
         {
             _contatoRepositorio = contatoRepositorio;
         }
-        public IActionResult Index()
-        {
-            List<ContatoModel> contato = _contatoRepositorio.BuscarTodos();
-            return View(contato);
-        }
+       
 
         public IActionResult Eventos()
         {
@@ -27,11 +23,7 @@ namespace app_cadastro.Controllers
             return View(contato);
         }
 
-        public IActionResult Criar()
-        {
-            return View();
-        }
-
+        
         public IActionResult Editar(int id)
         {
             ContatoModel contato = _contatoRepositorio.ListarPorId(id);
@@ -49,36 +41,17 @@ namespace app_cadastro.Controllers
             {
                 _contatoRepositorio.Apagar(id);
                 TempData["MensagemSucesso"] = "Usuário deletado com sucesso!";
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Login");
             }
             catch
             {
-                TempData["MensagemErro"] = $"Ops, Não foi possivel cadastrar o seu usuário,tente novamente!.";
-                return RedirectToAction("Index");
+                TempData["MensagemErro"] = $"Ops, Não foi possivel deletar o seu usuário,tente novamente!.";
+                return RedirectToAction("Index", "Login");
 
             }
         }
 
-        [HttpPost]
-        public IActionResult Criar(ContatoModel contato)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    _contatoRepositorio.Adicionar(contato);
-                    TempData["MensagemSucesso"] = "Usuário cadastrado com sucesso!";
-                    return RedirectToAction("Index");
-                }
-                return View(contato);
-
-            }
-            catch(SystemException erro)
-            {
-                TempData["MensagemErro"] = $"Ops, Não foi possivel cadastrar o seu usuário,tente novamente!, detalhe do erro:{ erro.Message}";
-                return RedirectToAction("Index");
-            }
-        }
+       
         [HttpPost]
         public IActionResult Alterar(ContatoModel contato)
         {
@@ -88,14 +61,14 @@ namespace app_cadastro.Controllers
                 {
                     _contatoRepositorio.Atualizar(contato);
                     TempData["MensagemSucesso"] = "Usuário atualizado com sucesso!";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", "Login");
                 }
                 return View("Editar", contato);
             }
             catch (SystemException erro)
             {
                 TempData["MensagemErro"] = $"Ops, Não foi possivel alterar o seu usuário,tente novamente!, detalhe do erro:{ erro.Message}";
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Login");
 
             }
         }

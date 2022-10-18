@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using app_cadastro.Repositorio;
 using app_cadastro.Helper;
+using System.Collections.Generic;
 
 namespace app_cadastro.Controllers
 {
@@ -22,11 +23,13 @@ namespace app_cadastro.Controllers
             if (_sessao.BuscarSessaoDoUsuario() != null) return RedirectToAction("Index", "Home");
             return View();
         }
+        
         public IActionResult Sair()
         {
             _sessao.RemoveSessaoDoUsuario();
             return RedirectToAction("Index", "Login");
         }
+       
 
         [HttpPost]
         public IActionResult Entrar(LoginModel loginModel)

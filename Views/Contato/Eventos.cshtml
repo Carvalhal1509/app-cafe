@@ -4,24 +4,23 @@
 }
 
 
-
 <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-    <a class="btn btn-warning btn-lg ms-2" role="button" asp-controller="Contato" asp-action="Criar">Adicionar Eventos</a>
+    <a class="btn btn-warning btn-lg ms-2" role="button" asp-controller="Registrar" asp-action="Criar">Adicionar Usuarios</a>
 </div>
-<br/>
+<br />
 
 @if (TempData["MensagemSucesso"] != null)
 {<div class="alert alert-success" role="alert">
-    <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
-     @TempData["MensagemSucesso"]
-</div>
+        <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
+        @TempData["MensagemSucesso"]
+    </div>
 }
 
 @if (TempData["MensagemErro"] != null)
 {<div class="alert alert-success" role="alert">
-    <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
-     @TempData["MensagemErro"]
-</div>
+        <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
+        @TempData["MensagemErro"]
+    </div>
 }
 
 <div class="text-center">

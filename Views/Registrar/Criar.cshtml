@@ -1,11 +1,12 @@
 ﻿@model ContatoModel
 @{
+    Layout = "_Layout Deslogada";
     ViewData["Title"] = "criar contato";
 
 }
 
 
-<form asp-controller="Contato" asp-action="Criar" method="post">
+<form asp-controller="Registrar" asp-action="Criar" method="post">
     <div class="form-group">
         <label>Nome</label>
         <input type="text" asp-for="Nome" class="form-control">
@@ -41,7 +42,7 @@
         @Html.ValidationMessageFor(x => x.Aniversario)
     </div>
 
-    <a class="btn btn-light btn-lg" role="button" asp-controller="Home" asp-action="Index">Voltar</a>
+    <a class="btn btn-light btn-lg" role="button" asp-controller="Login" asp-action="Index">Voltar</a>
     <button type="submit" class="btn btn-warning btn-lg ms-2">Continuar</button>
 </form>
       
