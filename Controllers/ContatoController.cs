@@ -1,4 +1,5 @@
-﻿using app_cadastro.Models;
+﻿using app_cadastro.Filters;
+using app_cadastro.Models;
 using app_cadastro.Repositorio;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace app_cadastro.Controllers
 {
+    [PaginaParaUsuarioLogado]
     public class ContatoController : Controller
     {
         private readonly IContatoRepositorio _contatoRepositorio;

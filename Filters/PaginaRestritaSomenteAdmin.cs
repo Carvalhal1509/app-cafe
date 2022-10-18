@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace app_cadastro.Filters
 {
-    public class PaginaParaUsuarioLogado : ActionFilterAttribute
+    public class PaginaRestritaSomenteAdmin : ActionFilterAttribute
     {
         public override void OnActionExecuted(ActionExecutedContext context)
         {
@@ -23,7 +23,13 @@ namespace app_cadastro.Filters
                 {
                     context.Result = new RedirectToRouteResult(new RouteValueDictionary { {"controller","Login" },{ "action","Index"} });
                 }
+                if (contato.Perfil != Enums.PerfilEnum.Admin)
+                {
+                    context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Restrito" }, { "action", "Index" } });
+                }
+
             }
+                
             base.OnActionExecuted(context);
         }
     }
