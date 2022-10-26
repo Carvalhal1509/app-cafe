@@ -1,34 +1,62 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] </title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                @await Component.InvokeAsync("Menu")
+    <div>
+        <header>
+            <div class="sidebar-nav">
+                <nav style="background-color: #ffdab9" class="navbar navbar-light static-top">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <b><span>Olá, @ViewBag.Nome <a asp-controller="Login" asp-action="Sair"><span class='bx bx-log-out' style="color:black"> Sair</span></a></span></b>
+                    <div class="bg-light offcanvas offcanvas-start shadow" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                        <br />
+                        <div id="container-button-close">
+                            <button type="button" class="btn-close btn-close-black" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav">
+                                <li><a style="color:black">Menu</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                @if (@ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.Admin)
+                                {
+                                    <li><a asp-controller="Registrar" asp-action="PaginaAdm"><span class="item-text">Controle de Usuários</span></a></li>
+                                }
+                                <li><a href="Cafe"><span class="item-text">Vaquinha do Café</span></a></li>
+                                <li><a a asp-controller="Contato" asp-action="Eventos"><span class="item-text">Detran - Eventos</span></a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a asp-controller="Login" asp-action="Sair"><span class='bx bx-log-out item-text' id="logout"> Sair</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
             </div>
-        </nav>
-    </header>
-    <div class="container">
+        </header>
+    </div>
+
+    <div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - Café & Aniversário
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+

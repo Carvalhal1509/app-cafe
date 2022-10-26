@@ -5,7 +5,7 @@ using ControleDeContatos.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using app_cadastro.Models;
+
 
 
 namespace app_cadastro.Repositorio
@@ -19,57 +19,71 @@ namespace app_cadastro.Repositorio
 
         }
 
-        public ContatoModel BuscarPorLogin(string login)
+        public Usuarios BuscarPorLogin(string email)
         {
-            return bancoContext1.ContatosTeste.FirstOrDefault(x => x.Login.ToUpper() == login);
+            return bancoContext1.Usuarios.FirstOrDefault(x => x.Email.ToUpper() == email);
         }
-        public ContatoModel ListarPorId(int id)
+        public Usuarios ListarPorId(int id)
         {
-            return bancoContext1.ContatosTeste.FirstOrDefault(x => x.Id == id);
+            return bancoContext1.Usuarios.FirstOrDefault(x => x.Id == id);
         }
-        public List<ContatoModel>BuscarTodos()
+        public List<Usuarios> BuscarTodos()
         {
-            return bancoContext1.ContatosTeste.Where(x => !x.StatusExc).ToList();
+            return bancoContext1.Usuarios.Where(x => !x.StatusExc).ToList();
         }
        
         
-        public ContatoModel Adicionar(ContatoModel contato)
+        public Usuarios Adicionar(Usuarios contato)
         {
-            bancoContext1.ContatosTeste.Add(contato);
+            bancoContext1.Usuarios.Add(contato);
             bancoContext1.SaveChanges();
             return contato;
         }
 
-        public ContatoModel Atualizar(ContatoModel contato)
+        public Usuarios Atualizar(Usuarios contato)
         {
-            ContatoModel contatoDb = ListarPorId(contato.Id);
+            Usuarios contatoDb = ListarPorId(contato.Id);
             if (contatoDb == null) throw new System.Exception("Houve um erro na atualizacão dos dados do usuário!");
             contatoDb.Nome = contato.Nome;
-            contatoDb.Login = contatoDb.Login;
             contatoDb.Senha = contato.Senha;
             contatoDb.Email = contato.Email;
+            contatoDb.Aniversario = contato.Aniversario;
             contatoDb.Celular = contato.Celular;
             contatoDb.Perfil = contato.Perfil;
 
-            bancoContext1.ContatosTeste.Update(contatoDb);
+            bancoContext1.Usuarios.Update(contatoDb);
             bancoContext1.SaveChanges();
             return contatoDb;
         }
 
         public bool Apagar(int id)
         {
-           
-            ContatoModel contatoDb = ListarPorId(id);
+
+            Usuarios contatoDb = ListarPorId(id);
             if (contatoDb == null) throw new System.Exception("Houve um erro na exclusão dos dados do usuário!");
                 contatoDb.StatusExc = true;
           
 
-            bancoContext1.ContatosTeste.Update(contatoDb);
+            bancoContext1.Usuarios.Update(contatoDb);
             bancoContext1.SaveChanges();
             
             return true;
 
         }
 
+            public Usuarios BuscarPorEmailAlterarSenha(string email, string novaSenha)
+        {
+            var query = bancoContext1.Usuarios.FirstOrDefault(x => x.Email.ToUpper() == email.ToUpper());
+            if (query != null)
+            {
+                query.Senha = novaSenha;
+
+                bancoContext1.Usuarios.Update(query);
+                bancoContext1.SaveChanges();
+            }
+
+            return query;
+        }
     }
 }
+

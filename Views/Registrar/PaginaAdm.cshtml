@@ -1,4 +1,4 @@
-﻿@model List<ContatoModel>
+﻿@model List<Usuarios>
 @{
     ViewData["Title"] = "Listagem de Contatos";
 }
@@ -6,52 +6,56 @@
 
 
 <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-    <a class="btn btn-warning btn-lg ms-2" role="button" asp-controller="Registrar" asp-action="Criar">Adicionar Usuarios</a>
+    <a class="btn btn-warning btn-lg ms-2 ml-2 mt-2" role="button" asp-controller="Registrar" asp-action="Criar">Adicionar Usuario</a>
+    <a class="btn btn-light btn-lg ml-2 mt-2" role="button" asp-controller="Home" asp-action="Index">Voltar</a>
 </div>
 <br/>
 
-@if (TempData["MensagemSucesso"] != null)
-{<div class="alert alert-success" role="alert">
-    <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
-     @TempData["MensagemSucesso"]
-</div>
-}
+<div class="container">
+    @if (TempData["MensagemSucesso"] != null)
+    {<div class="alert alert-success" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
+            @TempData["MensagemSucesso"]
+        </div>
+    }
 
-@if (TempData["MensagemErro"] != null)
-{<div class="alert alert-success" role="alert">
-    <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
-     @TempData["MensagemErro"]
+    @if (TempData["MensagemErro"] != null)
+    {<div class="alert alert-success" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
+            @TempData["MensagemErro"]
+        </div>
+    }
 </div>
-}
+
 
 <div class="text-center">
-    <h1 class="display-4">Lista de Usuarios </h1>
+    <h1 class="display-4">Lista de Usuários</h1>
+    <br />
 
-    <table class="table">
+    <table class="table container">
         <thead>
             <tr>
-                <th scope="col">Id</th>
+                <th scope="col" style="display:none">Id</th>
                 <th scope="col">Nome</th>
-                <th scope="col">Login</th>
                 <th scope="col">E-mail</th>
                 <th scope="col">Celular</th>
-                <th scope="col">Aniversario</th>
+                <th scope="col">Aniversário</th>
                 <th scope="col">Perfil</th>
+                <th scope="col">Ação</th>
             </tr>
         </thead>
         <tbody>
             @if (Model != null && Model.Any())
             {
-                foreach (ContatoModel contato in Model)
+                foreach (Usuarios contato in Model)
                 {
                     <tr>
-                        <th scope="row">@contato.Id</th>
+                        <th scope="row" style="display:none">@contato.Id</th>
                         <td>@contato.Nome</td>
-                        <td>@contato.Login</td>
                         <td>@contato.Email</td>
                         <td>@contato.Celular</td>
-                        <td>@contato.Aniversario</td>
-                        <td>@(contato.Perfil == app_cadastro.Enums.PerfilEnum.Admin ? "Administrador" : "Padrao")</td>
+                        <td>@contato.Aniversario.ToString("dd/MM/yyyy")</td>
+                        <td>@(contato.Perfil == app_cadastro.Enums.PerfilEnum.Admin ? "Administrador" : "Padrão")</td>
 
                         <td>
                             <div class="btn-group" role="group">

@@ -13,6 +13,6 @@ namespace ControleDeContatos.Data
         {
 		}
 
-		public DbSet<ContatoModel> ContatosTeste { get; set; }
+		public DbSet<Usuarios> Usuarios { get; set; }
 	}
 }

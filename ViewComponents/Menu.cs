@@ -15,7 +15,7 @@ namespace app_cadastro.ViewComponents
         {
             string sessaoUsuario = HttpContext.Session.GetString("sessaoUsuarioLogado");
             if (string.IsNullOrEmpty(sessaoUsuario)) return null;
-            ContatoModel contato = JsonConvert.DeserializeObject<ContatoModel>(sessaoUsuario);
+            Usuarios contato = JsonConvert.DeserializeObject<Usuarios>(sessaoUsuario);
             return View(contato);
         }
     }

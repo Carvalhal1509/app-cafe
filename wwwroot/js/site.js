@@ -5,3 +5,19 @@
 $('.close-alert').click(function () {
     $('.alert').hide('hide');
 });
+
+var menu_btn = document.querySelector("#menu-btn");
+var sidebar = document.querySelector("#sidebar");
+var container = document.querySelector(".my-container");
+menu_btn.addEventListener("clique", () => {
+    sidebar.classList.toggle("nav-ativo");
+    container.classList.toggle("active-cont");
+});
+
+
+
+
+
+
+
+

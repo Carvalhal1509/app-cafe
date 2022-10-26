@@ -4,32 +4,40 @@ using System;
 using app_cadastro.Repositorio;
 using app_cadastro.Helper;
 using System.Collections.Generic;
+using app_cadastro.Util;
 
 namespace app_cadastro.Controllers
 {
     public class LoginController : Controller
     {
+       
         private readonly IContatoRepositorio _contatoRepositorio;
         private readonly ISessao _sessao;
+        private readonly IEmail _email;
 
-        public LoginController(IContatoRepositorio contatoRepositorio,ISessao sessao)
+        public LoginController(IContatoRepositorio contatoRepositorio, ISessao sessao, IEmail email)
         {
             _contatoRepositorio = contatoRepositorio;
             _sessao = sessao;
+            _email = email;
         }
+        
         public IActionResult Index()
 
         {//se o usuario estiver logado,redirecionar para a home
             if (_sessao.BuscarSessaoDoUsuario() != null) return RedirectToAction("Index", "Home");
             return View();
         }
-        
+
+        public IActionResult RedefinirSenha()
+        {
+            return View();
+        }
         public IActionResult Sair()
         {
             _sessao.RemoveSessaoDoUsuario();
             return RedirectToAction("Index", "Login");
         }
-       
 
         [HttpPost]
         public IActionResult Entrar(LoginModel loginModel)
@@ -38,30 +46,80 @@ namespace app_cadastro.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                   ContatoModel contato = _contatoRepositorio.BuscarPorLogin(loginModel.Login);
-                   
-                    if (contato != null)
+                    Usuarios contato = _contatoRepositorio.BuscarPorLogin(loginModel.Email);
+                    if (contato.StatusExc == false)
                     {
-                        if(contato.SenhaValida(loginModel.Senha))
+                        loginModel.Senha = Hash.SHA512(loginModel.Senha);
+
+                        if (contato.SenhaValida(loginModel.Senha))
                         {
                             _sessao.CriarSessaoDoUsuario(contato);
                             return RedirectToAction("Index", "Home");
                         }
 
-                        TempData["MensagemErro"] = $"Senha invalida.Por favor,tente novamente!.";
+                        TempData["MensagemErro"] = $"Email ou Senha invalido. Por favor,tente novamente!.";
                     }
-                    TempData["MensagemErro"] = $"Usuario e/ou Senha invalida.Por favor,tente novamente!.";
+                    TempData["MensagemErro"] = $"Este usuário não tem mais acesso à esse sistema!!";
                 }
                 return View("index");
             }
             catch (Exception erro)
-            { 
-            TempData["MensagemErro"] = $"Ops, Não foi possivel realizar o Login,tente novamente!.";
+            {
+                TempData["MensagemErro"] = $"Ops, Não foi possivel realizar o Login,tente novamente!.";
+            }
+            return RedirectToAction("Index");
         }
-   return RedirectToAction("Index");
+        [HttpPost]
+        public IActionResult EnviarLinkParaRedefinirSenha(RedefinirSenhaModel redefinirSenhaModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+
+                    string novaSenha = Guid.NewGuid().ToString().Substring(0, 8);
+                    string novaSenhacriptografada = Util.Hash.SHA512(novaSenha);
+
+                    Usuarios contato = _contatoRepositorio.BuscarPorEmailAlterarSenha(redefinirSenhaModel.Email, novaSenhacriptografada);
+                    if (contato != null)
+                    {
+                        string mensagem = $"<strong>Olá,</strong><br>" +
+                            $"<br>" +
+                            $" a senha associada ao seu email no Web Cafe & Aniversário foi alterada.<br>" +
+                            $"<br>" +
+                            $"Sua nova senha é:<br>" +
+                            $"<br>" +
+                            $"{novaSenha}<br>" +
+                            $"<br>" +
+                            $"Obrigado por usar o Web Cafe & Aniversário";
+                        bool emailEnviado = _email.Enviar(contato.Email,"Web Cafe e Aniversário - Nova Senha",mensagem);
+                        if (emailEnviado)
+                        {
+                            TempData["MensagemSucesso"] = $"Enviamos para o seu email cadastrado uma nova senha.";
+                            return RedirectToAction("Index", "Login");
+                        }
+                        else
+                        {
+
+                            TempData["MensagemErro"] = $"Não conseguimos enviar para o seu email cadastrado uma nova senha.Porfavor,tente novamente.";
+                            return RedirectToAction("Index", "Login");
+                        }
+                    }
+                    TempData["MensagemErro"] = $"Não conseguimos redefinir sua senha.Por favor,verifique o email informado.";
+                }
+                return View("index");
+            }
+            catch (Exception erro)
+            {
+                TempData["MensagemErro"] = $"Ops, Não foi possivel redefinir sua senha! Tente novamente.";
+                return RedirectToAction("Index");
+            }
+        }
     }
-   }
 }
+
+
+
 
 
     

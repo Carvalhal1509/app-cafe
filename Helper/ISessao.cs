@@ -8,9 +8,9 @@ namespace app_cadastro.Helper
 {
     public interface ISessao
     {
-        void CriarSessaoDoUsuario(ContatoModel contato);
+        void CriarSessaoDoUsuario(Usuarios contato);
         void RemoveSessaoDoUsuario();
-        ContatoModel BuscarSessaoDoUsuario();
+        Usuarios BuscarSessaoDoUsuario();
 
     }
 }

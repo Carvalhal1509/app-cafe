@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Lista de Café";
+}
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-start">
+    <a class="btn btn-light btn-lg ml-2 mt-2" role="button" asp-controller="Home" asp-action="Index">Voltar</a>
+</div>
+<br />
+
+<div class="text-center">
+
+    <h1 class="display-4 mt-4">Lista Café</h1>
+
+    <table class="table">
+        <div class="mb-3 container row mt-3">
+            <div class="col-md-4">
+                <label for="formFile" class="form-label"> Anexar comprovante de pagamento: </label>
+            </div>
+            <div class="col-md-6">
+                <input class="form-control" type="file" id="formFile">
+            </div>
+            <div class="col-md-2">
+                <A class="btn btn-success" role="button" asp-controller="Home" asp-action="Index">Salvar</A>
+            </div>
+
+        </div>
+    </table>
+
+</div>
+

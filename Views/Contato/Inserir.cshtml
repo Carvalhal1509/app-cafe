@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Inserir Nome";
+}
+
+
+
+<div class="text-center">
+    <h1 class="display-4">Inserir Nome</h1>
+</div>
+
+<div class="row">
+    <div class="col-sm-5">
+        <div class="form-group">
+            <label scope="col">Nome:</label>
+            <input class="form-control" id="nome" name="nome" enable />
+        </div>
+    </div>
+</div>
+
+<a class="btn btn-warning btn-small" role="button" asp-controller="Contato" asp-action="Index">Salvar</a>
+<a class="btn btn-light btn-small" id=btnVoltar asp-controller="Contato" asp-action="index">Voltar</a>
+
+

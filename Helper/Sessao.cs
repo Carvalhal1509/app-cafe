@@ -15,14 +15,14 @@ namespace app_cadastro.Helper
         {
             _httpContext = httpContext;
         }
-        public ContatoModel BuscarSessaoDoUsuario()
+        public Usuarios BuscarSessaoDoUsuario()
         {
             string sessaoUsuario = _httpContext.HttpContext.Session.GetString("sessaoUsuarioLogado");
             if (string.IsNullOrEmpty(sessaoUsuario)) return null;
-            return JsonConvert.DeserializeObject<ContatoModel>(sessaoUsuario);
+            return JsonConvert.DeserializeObject<Usuarios>(sessaoUsuario);
         }
 
-        public void CriarSessaoDoUsuario(ContatoModel contato)
+        public void CriarSessaoDoUsuario(Usuarios contato)
         {
             string valor = JsonConvert.SerializeObject(contato);
             _httpContext.HttpContext.Session.SetString("sessaoUsuarioLogado",valor);

@@ -8,11 +8,12 @@ namespace app_cadastro.Repositorio
 {
     public interface IContatoRepositorio
     {
-        ContatoModel BuscarPorLogin(string login);
-        ContatoModel ListarPorId(int id);
-        List<ContatoModel> BuscarTodos();
-        ContatoModel Adicionar(ContatoModel contato);
-        ContatoModel Atualizar(ContatoModel contato);
+        Usuarios BuscarPorLogin(string email);
+        Usuarios BuscarPorEmailAlterarSenha(string email, string novaSenha);
+        Usuarios ListarPorId(int id);
+        List<Usuarios> BuscarTodos();
+        Usuarios Adicionar(Usuarios contato);
+        Usuarios Atualizar(Usuarios contato);
         bool Apagar(int id);
         
     }

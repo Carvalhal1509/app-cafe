@@ -1,6 +1,8 @@
 ﻿using app_cadastro.Filters;
+using app_cadastro.Helper;
 using app_cadastro.Models;
 using app_cadastro.Repositorio;
+using ControleDeContatos.Data;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,28 +15,51 @@ namespace app_cadastro.Controllers
     public class ContatoController : Controller
     {
         private readonly IContatoRepositorio _contatoRepositorio;
-        public ContatoController(IContatoRepositorio contatoRepositorio)
+        private BancoContext _context;
+        private readonly ISessao _sessao;
+        public ContatoController(IContatoRepositorio contatoRepositorio, BancoContext context, ISessao sessao)
         {
             _contatoRepositorio = contatoRepositorio;
+            _context = context;
+            _sessao = sessao;
         }
-       
 
         public IActionResult Eventos()
         {
-            List<ContatoModel> contato = _contatoRepositorio.BuscarTodos();
-            return View(contato);
+            var usuario = _sessao.BuscarSessaoDoUsuario();
+
+            if (usuario != null)
+            {
+                @ViewBag.Nome = usuario.Nome;
+                @ViewBag.Perfil = usuario.Perfil;
+                return View();
+            }
+            else
+            {
+                throw new Exception("Usuário ainda não está logado, efetue o login.");
+                _ = RedirectToAction("Index", "Login");
+            }
+            //List<Usuarios> contato = _contatoRepositorio.BuscarTodos();
         }
 
         
         public IActionResult Editar(int id)
         {
-            ContatoModel contato = _contatoRepositorio.ListarPorId(id);
+            var usuario = _sessao.BuscarSessaoDoUsuario();
+            @ViewBag.Nome = usuario.Nome;
+            @ViewBag.Perfil = usuario.Perfil;
+
+            Usuarios contato = _contatoRepositorio.ListarPorId(id);
             return View(contato);
         }
 
         public IActionResult ApagarConfirmacao(int id)
         {
-            ContatoModel contato = _contatoRepositorio.ListarPorId(id);
+            var usuario = _sessao.BuscarSessaoDoUsuario();
+            @ViewBag.Nome = usuario.Nome;
+            @ViewBag.Perfil = usuario.Perfil;
+
+            Usuarios contato = _contatoRepositorio.ListarPorId(id);
             return View(contato);
         }
         public IActionResult Apagar(int id)
@@ -43,11 +68,11 @@ namespace app_cadastro.Controllers
             {
                 _contatoRepositorio.Apagar(id);
                 TempData["MensagemSucesso"] = "Usuário deletado com sucesso!";
-                return RedirectToAction("Index", "Login");
+                return RedirectToAction("PaginaAdm", "Registrar");
             }
             catch
             {
-                TempData["MensagemErro"] = $"Ops, Não foi possivel deletar o seu usuário,tente novamente!.";
+                TempData["MensagemErro"] = $"Ops, Não foi possivel deletar o seu usuário, tente novamente!.";
                 return RedirectToAction("Index", "Login");
 
             }
@@ -55,24 +80,31 @@ namespace app_cadastro.Controllers
 
        
         [HttpPost]
-        public IActionResult Alterar(ContatoModel contato)
+        public IActionResult Alterar(Usuarios contato)
         {
+            var query = _context.Usuarios.Where(x => x.Email == contato.Email).FirstOrDefault();
+            
             try
             {
-                if (ModelState.IsValid)
+                if (query != null)
                 {
+                    contato.Senha = query.Senha;
                     _contatoRepositorio.Atualizar(contato);
                     TempData["MensagemSucesso"] = "Usuário atualizado com sucesso!";
-                    return RedirectToAction("Index", "Login");
+                    return RedirectToAction("PaginaAdm", "Registrar");
                 }
-                return View("Editar", contato);
+                else
+                {
+                    TempData["MensagemErro"] = $"Ops, Não foi possivel alterar esse usuário, tente novamente!";
+                    return View("Editar", contato);
+                }
             }
             catch (SystemException erro)
             {
                 TempData["MensagemErro"] = $"Ops, Não foi possivel alterar o seu usuário,tente novamente!, detalhe do erro:{ erro.Message}";
-                return RedirectToAction("Index", "Login");
-
+                return RedirectToAction("Editar", "Contato");
             }
+            
         }
     }
 }

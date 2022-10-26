@@ -18,7 +18,7 @@ namespace app_cadastro.Filters
             }
             else
             {
-                ContatoModel contato = JsonConvert.DeserializeObject<ContatoModel>(sessaoUsuario);
+                Usuarios contato = JsonConvert.DeserializeObject<Usuarios>(sessaoUsuario);
                 if(contato == null)
                 {
                     context.Result = new RedirectToRouteResult(new RouteValueDictionary { {"controller","Login" },{ "action","Index"} });

@@ -1,11 +1,11 @@
-﻿@model LoginModel
+﻿@model RedefinirSenhaModel
 @{
     Layout = "_Layout Deslogada";
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Redefinir Senha";
 
 }
 
-<form asp-controller="Login" asp-action="Entrar" method="post">
+<form asp-controller="Login" asp-action="EnviarLinkParaRedefinirSenha" method="post">
     <section class="vh-100 bg-image"
              style="background-image: url('/Image/cafedamanha.png'); ">
 
@@ -15,7 +15,7 @@
                     <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                         <div class="card" style="border-radius: 15px;">
                             <div class="card-body p-5">
-                                <h3>Web Café & Eventos</h3>
+                                <h3>Detran - Web Café & Eventos</h3>
 
                                 <div>
                                     @if (TempData["MensagemSucesso"] != null)
@@ -39,20 +39,10 @@
                                     @Html.ValidationMessageFor(x => x.Email)
                                 </div>
 
-                                <div class="form-outline mb-4">
-                                    <label>Senha</label>
-                                    <input type="password" asp-for="Senha" class="form-control form-control-lg" id="senha" />
-                                    @Html.ValidationMessageFor(x => x.Senha)
-                                </div>
-
                                 <div class="btn-group" role="group">
-                                    <a class="btn btn-light btn-lg" role="button" asp-controller="Usuario" asp-action="Registrar">Registrar</a>
-                                    <button type="submit" class="btn btn-warning btn-lg ms-2">Login</button>
+                                    <a class="btn btn-light btn-lg" role="button" asp-controller="Login" asp-action="Index">Voltar</a>
+                                    <button type="submit" class="btn btn-warning btn-lg ms-2">Redefinir Senha</button>
                                 </div>
-                                <p class="=mb-4 text-sm-left mx-auto">
-                                    Esqueceu sua senha?
-                                    <a asp-action="RedefinirSenha" asp-controller="Login" class="text-primary text-gradient font-weight-bold">Redefinir senha</a>
-                                </p>
                             </div>
                         </div>
                     </div>
@@ -61,4 +51,3 @@
         </div>
     </section>
 </form>
-
