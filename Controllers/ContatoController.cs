@@ -1,13 +1,11 @@
-﻿using app_cadastro.Filters;
+﻿using app_cadastro.Data;
+using app_cadastro.Filters;
 using app_cadastro.Helper;
 using app_cadastro.Models;
 using app_cadastro.Repositorio;
-using ControleDeContatos.Data;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace app_cadastro.Controllers
 {
@@ -32,6 +30,9 @@ namespace app_cadastro.Controllers
             {
                 @ViewBag.Nome = usuario.Nome;
                 @ViewBag.Perfil = usuario.Perfil;
+                @ViewBag.Email = usuario.Email;
+                @ViewBag.Celular = usuario.Celular;
+                @ViewBag.Aniversario = usuario.Aniversario;
                 return View();
             }
             else
@@ -48,6 +49,10 @@ namespace app_cadastro.Controllers
             var usuario = _sessao.BuscarSessaoDoUsuario();
             @ViewBag.Nome = usuario.Nome;
             @ViewBag.Perfil = usuario.Perfil;
+            @ViewBag.Email = usuario.Email;
+            @ViewBag.Celular = usuario.Celular;
+            @ViewBag.Aniversario = usuario.Aniversario;
+
 
             Usuarios contato = _contatoRepositorio.ListarPorId(id);
             return View(contato);
@@ -58,10 +63,14 @@ namespace app_cadastro.Controllers
             var usuario = _sessao.BuscarSessaoDoUsuario();
             @ViewBag.Nome = usuario.Nome;
             @ViewBag.Perfil = usuario.Perfil;
+            @ViewBag.Email = usuario.Email;
+            @ViewBag.Celular = usuario.Celular;
+            @ViewBag.Aniversario = usuario.Aniversario;
 
             Usuarios contato = _contatoRepositorio.ListarPorId(id);
             return View(contato);
         }
+
         public IActionResult Apagar(int id)
         {
             try
@@ -73,7 +82,7 @@ namespace app_cadastro.Controllers
             catch
             {
                 TempData["MensagemErro"] = $"Ops, Não foi possivel deletar o seu usuário, tente novamente!.";
-                return RedirectToAction("Index", "Login");
+                return RedirectToAction("PaginaAdm", "Registrar");
 
             }
         }

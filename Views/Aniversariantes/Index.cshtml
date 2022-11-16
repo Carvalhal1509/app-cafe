@@ -1,0 +1,38 @@
+﻿@model List<Usuarios>
+@{
+    ViewData["Title"] = "Listagem de Aniversariantes";
+}
+
+
+
+<div class="text-center container">
+    <h2>Lista de Aniversariantes</h2>
+    <br />
+
+    <table class="table table-bordered table-striped" id="table-aniversariantes">
+        <thead>
+            <tr>
+                <th scope="col" style="display:none">Id</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Aniversário</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (Usuarios contato in Model)
+                {
+                    <tr>
+                        <th scope="row" style="display:none">@contato.Id</th>
+                        <td>@contato.Nome</td>
+                        <td>@contato.Aniversario.ToString("dd/MM/yyyy")</td>
+                    </tr>
+
+                }
+            }
+
+
+        </tbody>
+    </table>
+</div>
+

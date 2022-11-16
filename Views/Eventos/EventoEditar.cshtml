@@ -1,0 +1,55 @@
+﻿@using app_cadastro.Enums;
+@model EventoModel
+@{
+    ViewData["Title"] = "editar evento";
+
+}
+
+
+<div class="text-center mt-3">
+    <h3>Realmente deseja alterar o evento?</h3>
+
+</div>
+<div id="overlay" class="overlay container">
+    <div>
+        @if (TempData["MensagemSucesso"] != null)
+        {<div class="alert alert-success" role="alert">
+                <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
+                @TempData["MensagemSucesso"]
+            </div>
+        }
+
+        @if (TempData["MensagemErro"] != null)
+        {<div class="alert alert-success" role="alert">
+                <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
+                @TempData["MensagemErro"]
+            </div>
+        }
+    </div>
+
+    <form asp-controller="Eventos" asp-action="Alterar" method="post">
+        <input type="hidden" asp-for="Id" />
+
+
+        <div class="form-group">
+            <label>Nome do evento</label>
+            <input type="text" asp-for="NomeEvento" class="form-control">
+            @Html.ValidationMessageFor(x => x.NomeEvento)
+        </div>
+
+
+        <div class="wrap-input100 validate-input">
+            <span class="label-input100"> Data do evento</span>
+            <input type="date" asp-for="DataEvento" class="input100" placeholder="DD/MM/AAAA">
+            <span class="focus-input100"></span>
+        </div>
+
+        <br />
+
+
+        <div class="btn-group" role="group">
+            <a class="btn btn-light btn-lg" role="button" asp-controller="Eventos" asp-action="Index">Voltar</a>
+            <button type="submit" class="btn btn-warning btn-lg ms-2">Continuar</button>
+        </div>
+    </form>
+</div>

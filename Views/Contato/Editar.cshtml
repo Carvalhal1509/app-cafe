@@ -7,7 +7,7 @@
 
 
 <div class="text-center mt-3">
-    <h3>Realmente deseja editar o cadastro?</h3>
+    <h3>Editar usuário</h3>
 
 </div>
 <div id="overlay" class="overlay container">
@@ -26,45 +26,45 @@
             </div>
         }
     </div>
-    <form asp-controller="Contato" asp-action="Alterar" method="post">
+    <form class="row" asp-controller="Contato" asp-action="Alterar" method="post">
         <input type="hidden" asp-for="Id" />
 
-        <div class="form-group">
+        <div class="form-group col-sm-6">
             <label>Nome</label>
             <input type="text" asp-for="Nome" class="form-control">
             @Html.ValidationMessageFor(x => x.Nome)
         </div>
 
-        <div class="form-group">
+        <div class="form-group col-sm-6">
             <label>Email</label>
             <input type="text" asp-for="Email" class="form-control">
             @Html.ValidationMessageFor(x => x.Email)
         </div>
 
-        <div class="form-group">
+        <div class="form-group col-sm-6">
             <label>Celular</label>
             <input type="text" asp-for="Celular" class="form-control">
             @Html.ValidationMessageFor(x => x.Celular)
         </div>
 
-        <div class="form-group">
+        <div class="form-group col-sm-6">
             <label>Aniversário</label>
             <input type="date" asp-for="Aniversario" class="form-control">
         </div>
 
-        <div class="form-group">
+        <div class="form-group col-sm-12">
             <label for="nome" class="form-label">Perfil</label>
             <select asp-for="Perfil" class="form-control">
-                <option value="">Selecione</option>
+                <option value=""  selected="selected">Selecione...</option>
                 <option value="@PerfilEnum.Admin">Administrador</option>
                 <option value="@PerfilEnum.Padrao">Padrão</option>
             </select>
             @Html.ValidationMessageFor(x => x.Perfil)
         </div>
 
-        <div class="btn-group" role="group">
-            <a class="btn btn-light btn-lg" role="button" asp-controller="Registrar" asp-action="PaginaAdm">Voltar</a>
-            <button type="submit" class="btn btn-warning btn-lg ms-2">Continuar</button>
+        <div class="btn-group col-sm-2" role="group">
+            <a class="btn btn-light" role="button" asp-controller="Registrar" asp-action="PaginaAdm">Voltar</a>
+            <button type="submit" class="btn btn-warning ms-2">Continuar</button>
         </div>
     </form>
 </div>

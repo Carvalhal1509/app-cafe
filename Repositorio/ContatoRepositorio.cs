@@ -1,11 +1,8 @@
-﻿using app_cadastro.Models;
-using ControleDeContatos;
+﻿using app_cadastro.Data;
+using app_cadastro.Models;
 using System;
-using ControleDeContatos.Data;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-
 
 
 namespace app_cadastro.Repositorio
@@ -31,8 +28,13 @@ namespace app_cadastro.Repositorio
         {
             return bancoContext1.Usuarios.Where(x => !x.StatusExc).ToList();
         }
-       
-        
+
+        public List<Usuarios> ListarTodos()
+        {
+            return bancoContext1.Usuarios.ToList();
+        }
+
+
         public Usuarios Adicionar(Usuarios contato)
         {
             bancoContext1.Usuarios.Add(contato);
@@ -61,12 +63,12 @@ namespace app_cadastro.Repositorio
 
             Usuarios contatoDb = ListarPorId(id);
             if (contatoDb == null) throw new System.Exception("Houve um erro na exclusão dos dados do usuário!");
-                contatoDb.StatusExc = true;
-          
+            contatoDb.StatusExc = true;
+
 
             bancoContext1.Usuarios.Update(contatoDb);
             bancoContext1.SaveChanges();
-            
+
             return true;
 
         }
@@ -84,6 +86,20 @@ namespace app_cadastro.Repositorio
 
             return query;
         }
+
+        public bool ReativarUsuario(int id)
+        {
+
+            Usuarios contatoDb = ListarPorId(id);
+            if (contatoDb == null) throw new System.Exception("Houve um erro na reativação do usuário!");
+            contatoDb.StatusExc = false;
+
+
+            bancoContext1.Usuarios.Update(contatoDb);
+            bancoContext1.SaveChanges();
+
+            return true;
+
+        }
     }
 }
-

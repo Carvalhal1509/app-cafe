@@ -1,0 +1,71 @@
+﻿@model List<EventoModel>
+@{
+    ViewData["Title"] = "Listagem de Eventos";
+}
+
+
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-start">
+    <a class="btn btn-warning btn-lg ms-2 ml-2 mt-2" role="button" asp-controller="Eventos" asp-action="CriarEvento">Adicionar Eventos</a>
+    <a class="btn btn-light btn-lg ml-2 mt-2" role="button" asp-controller="Home" asp-action="Index">Voltar</a>
+</div>
+<br />
+
+<div class="container">
+    @if (TempData["MensagemSucesso"] != null)
+    {<div class="alert alert-success" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
+            @TempData["MensagemSucesso"]
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {<div class="alert alert-success" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
+            @TempData["MensagemErro"]
+        </div>
+    }
+</div>
+
+
+<div class="text-center container">
+    <h1 class="display-4">Lista de Eventos</h1>
+    <br />
+
+    <table class="table container" id="table-eventos">
+        <thead>
+            <tr>
+                <th scope="col" style="display:none">Id</th>
+                <th scope="col">Nome do Evento</th>
+                <th scope="col">Organizador</th>
+                <th scope="col">Data do Evento</th>
+                <th scope="col">Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (EventoModel evento in Model)
+                {
+                    <tr>
+                        <th scope="row" style="display:none">@evento.Id</th>
+                        <td>@evento.NomeEvento </td>
+                        <td>@evento.Organizador</td>
+                        <td>@evento.DataEvento.ToString("dd/MM/yyyy")</td>
+
+
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a role="button" class="btn btn-light btn-lg" asp-route-id="@evento.Id" asp-controller="Eventos" asp-action="EventoEditar">Editar</a>
+                                <a role="button" class="btn btn-danger" asp-route-id="@evento.Id" asp-controller="Eventos" asp-action="ApagarConfirmacao">Apagar</a>
+                            </div>
+                        </td>
+
+                    </tr>
+                }
+            }
+
+
+        </tbody>
+    </table>
+</div>

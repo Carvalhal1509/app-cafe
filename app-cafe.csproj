@@ -13,7 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Cafe\CriarCafe.cshtml" />
     <Content Remove="Views\Contato\Administrador.cshtml" />
+    <Content Remove="wwwroot\css\.editorconfig" />
+    <Content Remove="wwwroot\css\menu.cs" />
   </ItemGroup>
 
   <ItemGroup>

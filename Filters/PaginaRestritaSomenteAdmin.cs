@@ -25,7 +25,7 @@ namespace app_cadastro.Filters
                 }
                 if (contato.Perfil != Enums.PerfilEnum.Admin)
                 {
-                    context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Restrito" }, { "action", "Index" } });
+                    context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Home" }, { "action", "Index" } });
                 }
 
             }

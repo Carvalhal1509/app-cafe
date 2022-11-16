@@ -1,30 +1,88 @@
-﻿@{
+﻿@model List<CafeModel>
+@{
     ViewData["Title"] = "Lista de Café";
 }
 
 <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+    <a class="btn btn-warning btn-lg ms-2 ml-2 mt-2" role="button" asp-controller="Cafe" asp-action="CafeCriar">Adicionar Cafe</a>
     <a class="btn btn-light btn-lg ml-2 mt-2" role="button" asp-controller="Home" asp-action="Index">Voltar</a>
 </div>
 <br />
 
-<div class="text-center">
 
-    <h1 class="display-4 mt-4">Lista Café</h1>
 
-    <table class="table">
-        <div class="mb-3 container row mt-3">
-            <div class="col-md-4">
-                <label for="formFile" class="form-label"> Anexar comprovante de pagamento: </label>
-            </div>
-            <div class="col-md-6">
-                <input class="form-control" type="file" id="formFile">
-            </div>
-            <div class="col-md-2">
-                <A class="btn btn-success" role="button" asp-controller="Home" asp-action="Index">Salvar</A>
-            </div>
-
+<div class="container">
+    @if (TempData["MensagemSucesso"] != null)
+    {<div class="alert alert-success" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
+            @TempData["MensagemSucesso"]
         </div>
-    </table>
+    }
 
+    @if (TempData["MensagemErro"] != null)
+    {<div class="alert alert-success" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
+            @TempData["MensagemErro"]
+        </div>
+    }
 </div>
 
+
+<div class="text-center container">
+    <h1 class="display-4">Lista de Cafe</h1>
+    <br />
+
+    <table class="table container" id="table-cafe">
+        <thead>
+            <tr>
+                <th scope="col" style="display:none">Id</th>
+                <th scope="col">Organizador</th>
+                <th scope="col">Setor</th>
+                <th scope="col">Data do Cafe</th>
+                <th scope="col">Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (CafeModel cafe in Model)
+                {
+                    <tr>
+                        <th scope="row" style="display:none">@cafe.Id</th>
+                        <td>@cafe.Organizador</td>
+                        <td>@cafe.Cafe</td>
+                        <td>@cafe.DataCafe.ToString("dd/MM/yyyy")</td>
+
+
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a role="button" class="btn btn-light btn-lg" asp-route-id="@cafe.Id" asp-controller="Cafe" asp-action="CafeEditar">Editar</a>
+                                <a role="button" class="btn btn-danger" asp-route-id="@cafe.Id" asp-controller="Cafe" asp-action="ApagarConfirmacao">Apagar</a>
+                            </div>
+                        </td>
+
+                    </tr>
+                }
+            }
+
+
+        </tbody>
+    </table>
+</div>
+
+</br>
+<div class="text-center">
+
+    <div class="mb-3 container row mt-3">
+        <div class="col-md-4">
+            <label for="formFile" class="form-label"> Anexar comprovante de pagamento: </label>
+        </div>
+        <div class="col-md-6">
+            <input class="form-control" type="file" id="formFile">
+        </div>
+        <div class="col-md-2">
+            <A class="btn btn-success" role="button">Salvar</A>
+        </div>
+
+    </div>
+</div>

@@ -12,9 +12,11 @@ namespace app_cadastro.Repositorio
         Usuarios BuscarPorEmailAlterarSenha(string email, string novaSenha);
         Usuarios ListarPorId(int id);
         List<Usuarios> BuscarTodos();
+        List<Usuarios> ListarTodos();
         Usuarios Adicionar(Usuarios contato);
         Usuarios Atualizar(Usuarios contato);
         bool Apagar(int id);
-        
+        bool ReativarUsuario(int id);
+
     }
 }

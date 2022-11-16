@@ -85,14 +85,14 @@ namespace app_cadastro.Controllers
                     {
                         string mensagem = $"<strong>Olá,</strong><br>" +
                             $"<br>" +
-                            $" a senha associada ao seu email no Web Cafe & Aniversário foi alterada.<br>" +
+                            $"A senha associada ao seu email no Detran - Café & Eventos foi alterada.<br>" +
                             $"<br>" +
                             $"Sua nova senha é:<br>" +
                             $"<br>" +
                             $"{novaSenha}<br>" +
                             $"<br>" +
-                            $"Obrigado por usar o Web Cafe & Aniversário";
-                        bool emailEnviado = _email.Enviar(contato.Email,"Web Cafe e Aniversário - Nova Senha",mensagem);
+                            $"<p>Obrigado por usar o DETRAN - Café & Eventos";
+                        bool emailEnviado = _email.Enviar(contato.Email,"Detran Web Café e Eventos - Nova Senha",mensagem);
                         if (emailEnviado)
                         {
                             TempData["MensagemSucesso"] = $"Enviamos para o seu email cadastrado uma nova senha.";

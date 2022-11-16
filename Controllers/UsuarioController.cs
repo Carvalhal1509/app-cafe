@@ -1,12 +1,9 @@
-﻿using app_cadastro.Models;
+﻿using app_cadastro.Data;
+using app_cadastro.Models;
 using app_cadastro.Util;
-using ControleDeContatos.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace app_cadastro.Controllers
 {

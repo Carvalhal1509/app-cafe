@@ -1,20 +1,22 @@
 ﻿using app_cadastro.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace ControleDeContatos.Data
 
-	
+namespace app_cadastro.Data
+
+
 {
-	public class ControleDeContatos	 : DbContext
+    public class BancoContext	 : DbContext
 	{
-		public ControleDeContatos(DbContextOptions<BancoContext> options) : base(options)
+		public BancoContext(DbContextOptions<BancoContext> options) : base(options)
         {
 		}
 
 		public DbSet<Usuarios> Usuarios { get; set; }
+		public DbSet<EventoModel> Eventos { get; set; }
+		public DbSet<CafeModel> Cafe { get; set; }
+
 	}
 }
+
+

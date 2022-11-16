@@ -6,16 +6,15 @@
 }
 
 <form asp-controller="Login" asp-action="EnviarLinkParaRedefinirSenha" method="post">
-    <section class="vh-100 bg-image"
-             style="background-image: url('/Image/cafedamanha.png'); ">
+    <section class="vh-100 background-image-RedefinirSenha">
 
         <div class="mask d-flex align-items-center h-100 gradient-custom-3">
             <div class="container h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-                        <div class="card" style="border-radius: 15px;">
+                        <div class="card-RedefinirSenha" style="border-radius: 15px;">
                             <div class="card-body p-5">
-                                <h3>Detran - Web Café & Eventos</h3>
+                                <h3 class="text-RedefinirSenha">Detran - Web Café & Eventos</h3>
 
                                 <div>
                                     @if (TempData["MensagemSucesso"] != null)
@@ -34,14 +33,20 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <label>Email</label>
+                                    <label class="text-RedefinirSenha">Email</label>
                                     <input type="text" asp-for="Email" class="form-control form-control-lg" id="email" />
                                     @Html.ValidationMessageFor(x => x.Email)
                                 </div>
 
-                                <div class="btn-group" role="group">
-                                    <a class="btn btn-light btn-lg" role="button" asp-controller="Login" asp-action="Index">Voltar</a>
-                                    <button type="submit" class="btn btn-warning btn-lg ms-2">Redefinir Senha</button>
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <button type="submit" class="btn btn-warning btn-lg ms-2" style="width:100%">Redefinir Senha</button>
+                                    </div>
+                                    <div class="col-xl-12">
+                                        <div class="registrar-login">
+                                            <a  type="submit" class="text-register" role="button" asp-controller="Login" asp-action="Index">Voltar</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
