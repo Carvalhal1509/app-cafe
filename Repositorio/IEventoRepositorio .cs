@@ -10,7 +10,7 @@ namespace app_cadastro.Repositorio
     {
         
         EventoModel ListarPorId(int id);
-        List<EventoModel> BuscarTodos();
+        List<EventoModel> BuscarTodos(int usuarioId);
         EventoModel Adicionar(EventoModel evento);
         EventoModel Atualizar(EventoModel evento);
         bool Apagar(int id);

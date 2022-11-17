@@ -18,9 +18,9 @@ namespace app_cadastro.Repositorio
         {
             return bancoContext1.Eventos.FirstOrDefault(x => x.Id == id);
         }
-        public List<EventoModel> BuscarTodos()
+        public List<EventoModel> BuscarTodos(int usuarioId)
         {
-            return bancoContext1.Eventos.Where(x => !x.StatusExc).ToList();
+            return bancoContext1.Eventos.Where(x => x.UsuarioId == usuarioId && !x.StatusExc).ToList();
         }
 
        

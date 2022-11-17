@@ -37,6 +37,6 @@ namespace app_cadastro.Models
         {
             return Senha == senha;
         }
-
+        public virtual List<EventoModel> Contatos { get; set; }
     }
 }

@@ -20,6 +20,8 @@ namespace app_cadastro.Models
         public DateTime DataEvento { get; set; }
 
         public bool StatusExc { get; set; }
+        public int? UsuarioId { get; set; }
+        public Usuarios UsuarioModal { get; set; }
 
     }
 }
