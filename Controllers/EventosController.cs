@@ -35,11 +35,31 @@ namespace app_cadastro.Controllers
 
 
         public IActionResult Index()
+        {
+
             {
                 Usuarios usuario = _sessao.BuscarSessaoDoUsuario();
-                List<EventoModel> evento = _eventoRepositorio.BuscarTodos(usuario.Id);
+
+                if (usuario != null)
+                {
+                    @ViewBag.Nome = usuario.Nome;
+                    @ViewBag.Perfil = usuario.Perfil;
+                    @ViewBag.Email = usuario.Email;
+                    @ViewBag.Celular = usuario.Celular;
+                    @ViewBag.Aniversario = usuario.Aniversario;
+
+                    List<EventoModel> evento = _eventoRepositorio.BuscarTodos(usuario.Id);
                     return View(evento);
+                }
+                else
+                {
+                    throw new Exception("Usuário ainda não está logado, efetue o login.");
+                    _ = RedirectToAction("Index", "Login");
+                }
             }
+
+        }
+        
                 
         public IActionResult CriarEvento()
         {
