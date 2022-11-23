@@ -39,11 +39,21 @@
 
             }
             <li>
-                <a asp-controller="Cafe" asp-action="Index">
-                    <i class="material-symbols-outlined">coffee</i><span class="link_name">Vaquinha do Café</span>
-                </a>
+                <div class="iocn-link">
+                    <a href="#">
+                        <i class="material-symbols-outlined">coffee</i><span class="link_name">Vaquinha do Café</span>
+                    </a>
+                    <i class='bx bxs-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a asp-controller="Arquivos" asp-action="Index">Comprovante Pix</a></li>
+                    <li><a asp-controller="Cafe" asp-action="Index">Vaquinha do Café</a></li>
+                    @*<li><a asp-controller="Registrar" asp-action="PaginaAdm"><i class=""></i><span class="link_name"></span>Ativos</a></li>
+        <li><a asp-controller="Registrar" asp-action="UsuariosInativos"><i class=""></i><span class="link_name"></span>Inativos</a></li>*@
+                </ul>
             </li>
-          
+           
+
 
             <li>
                 <div class="iocn-link">

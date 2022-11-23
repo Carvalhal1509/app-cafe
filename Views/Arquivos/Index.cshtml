@@ -1,0 +1,47 @@
+﻿@model IEnumerable<app_cadastro.Models.Arquivos>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="text-center">
+    <div class="mb-3 container row mt-3">
+        <div class="col-md-6">
+            <form action="/Arquivos/UploadImagem" enctype="multipart/form-data" for="formFile" class="form-label" method="post">
+                <label for="formFile" class="dis-block txt3 hov1 p-r-30 p-l-30"> Anexar comprovante de pagamento: </label>
+                <input type="file" class="btn btn-light btn-lg" name="arquivos" id="formFile" multiple />
+                <button type="submit" class="btn btn-warning btn-lg ms-2" style="width:20%">Salvar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="text-center container">
+    <table class="table-arquivos">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Descricao)
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Descricao)
+                        </td>
+                        <td>
+                            <a asp-action="Visualizar" asp-route-id="@item.ID"
+                               target="_blank">Download</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+ </div>

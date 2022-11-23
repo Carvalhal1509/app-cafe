@@ -1,7 +1,10 @@
-﻿@model List<CafeModel>
+﻿
+@model List<CafeModel>
 @{
     ViewData["Title"] = "Lista de Café";
 }
+
+
 
 <div class="d-grid gap-2 d-md-flex justify-content-md-start">
     <a class="btn btn-warning btn-lg ms-2 ml-2 mt-2" role="button" asp-controller="Cafe" asp-action="CafeCriar">Adicionar Cafe</a>
@@ -70,19 +73,5 @@
     </table>
 </div>
 
-</br>
-<div class="text-center">
 
-    <div class="mb-3 container row mt-3">
-        <div class="col-md-4">
-            <label for="formFile" class="form-label"> Anexar comprovante de pagamento: </label>
-        </div>
-        <div class="col-md-6">
-            <input class="form-control" type="file" id="formFile">
-        </div>
-        <div class="col-md-2">
-            <A class="btn btn-success" role="button">Salvar</A>
-        </div>
 
-    </div>
-</div>

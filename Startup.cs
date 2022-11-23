@@ -8,6 +8,7 @@ using app_cadastro.Repositorio;
 using Microsoft.AspNetCore.Http;
 using app_cadastro.Helper;
 using app_cadastro.Data;
+using app_cadastro.Infraestrutura;
 
 namespace app_cadastro
 {
@@ -23,12 +24,15 @@ namespace app_cadastro
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddDbContext<ArquivoContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("ArquivoContext")));
+           
 
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<BancoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DataBase")));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            
+
+            services.AddControllersWithViews();
+
             services.AddScoped<IContatoRepositorio, ContatoRepositorio>();
             services.AddScoped<IEventoRepositorio, EventoRepositorio>();
             services.AddScoped<ICafeRepositorio, CafeRepositorio>();
