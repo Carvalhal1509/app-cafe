@@ -1,4 +1,5 @@
-﻿@model Usuarios
+﻿@using app_cadastro.Enums;
+@model Usuarios
 @{
     ViewData["Title"] = "Registrar Usuário";
     Layout = "_LayoutDefault";
@@ -79,6 +80,21 @@
                                     @Html.ValidationMessageFor(x => x.Senha)
                                 </div>
                                 <div class="wrap-input100 validate-input" data-validate="Repeat Password is required">
+                                    <span class="label-input100">Setor*:</span>
+                                    <select asp-for="Setor" class="input100" id="setor" name="setor">
+                                        <option value="@SetorEnum.Atendimento">Atendimento</option>
+                                        <option value="@SetorEnum.EGP">EGP</option>
+                                        <option value="@SetorEnum.InfraEstrutura">Infraestrutura</option>
+                                        <option value="@SetorEnum.PlataformaAlta">Plataforma Alta</option>
+                                        <option value="@SetorEnum.PlataformaBaixa">Plataforma Baixa</option>
+                                        <option value="@SetorEnum.Requisitos">Requisitos</option>
+                                        <option value="@SetorEnum.Suporte">Suporte</option>
+                                    </select>
+                                    <span class="focus-input100"></span>
+                                    @Html.ValidationMessageFor(x => x.Setor)
+
+                                </div>
+                                <div class="wrap-input100 validate-input" data-validate="Repeat Password is required">
                                     <span class="label-input100">Data de Nascimento:</span>
                                     <input class="input100" type="date" id="data" name="data" placeholder="DD/MM/AAAA">
                                     <span class="focus-input100"></span>
@@ -140,6 +156,7 @@
             'Usuario.Celular': $('#telefone').val(),
             'Usuario.Nome': $('#nome').val(),
             'Usuario.Aniversario': $('#data').val(),
+            'Usuario.Setor': $('#setor').val(),
         },
         url: '@Url.Action("SalvarUsuario", "Usuario")',
         success: function (result)
@@ -168,6 +185,3 @@
         $('#sucessModal').hide();
     }
 </script>
-
-
-

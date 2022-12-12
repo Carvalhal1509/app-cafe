@@ -8,6 +8,7 @@ using app_cadastro.Repositorio;
 using app_cadastro.Filters;
 using app_cadastro.Helper;
 using app_cadastro.Data;
+using app_cadastro.Util;
 
 namespace app_cadastro.Controllers
 {
@@ -26,6 +27,17 @@ namespace app_cadastro.Controllers
         }
         public IActionResult CafeEditar(int id)
         {
+
+            var usuario = _sessao.BuscarSessaoDoUsuario();
+
+            if (usuario != null)
+            {
+                @ViewBag.Nome = usuario.Nome;
+                @ViewBag.Perfil = usuario.Perfil;
+                @ViewBag.Email = usuario.Email;
+                @ViewBag.Celular = usuario.Celular;
+                @ViewBag.Aniversario = usuario.Aniversario;
+            }
 
             CafeModel cafe = _cafeRepositorio.ListarPorId(id);
             return View(cafe);
@@ -65,7 +77,7 @@ namespace app_cadastro.Controllers
             try
             {
                 _cafeRepositorio.Apagar(id);
-                TempData["MensagemSucesso"] = "Cafe deletado com sucesso!";
+                TempData["MensagemSucesso"] = "Vaquinha do Café deletado com sucesso!";
                 return RedirectToAction("Index", "Cafe");
             }
             catch
@@ -77,29 +89,38 @@ namespace app_cadastro.Controllers
         }
         public IActionResult ApagarConfirmacao(int id)
         {
+            var usuario = _sessao.BuscarSessaoDoUsuario();
 
-            CafeModel cafe = _cafeRepositorio.ListarPorId(id);
+            if (usuario != null)
+            {
+                @ViewBag.Nome = usuario.Nome;
+                @ViewBag.Perfil = usuario.Perfil;
+                @ViewBag.Email = usuario.Email;
+                @ViewBag.Celular = usuario.Celular;
+                @ViewBag.Aniversario = usuario.Aniversario;
+            }
+
+           CafeModel cafe = _cafeRepositorio.ListarPorId(id);
             return View(cafe);
         }
         [HttpPost]
         public IActionResult Alterar(CafeModel cafee)
-
         {
             var query = _context.Cafe.Where(x => x.Id == cafee.Id).FirstOrDefault();
 
             try
             {
-                if (query != null)
+                if (query != null && cafee.Cafe != null)
                 {
                     cafee.Organizador = query.Organizador;
                     _cafeRepositorio.Atualizar(cafee);
-                    TempData["MensagemSucesso"] = "Cafe atualizado com sucesso!";
+                    TempData["MensagemSucesso"] = "Vaquinha do Café atualizado com sucesso!";
                     return RedirectToAction("Index", "Cafe");
                 }
                 else
                 {
-                    TempData["MensagemErro"] = $"Ops, Não foi possivel alterar esse cafe, tente novamente!";
-                    return View("CafeEditar", cafee);
+                    TempData["MensagemErro"] = $"Ops, Não foi possivel alterar essa vaquinha, preencha os dados e tente novamente!";
+                    return RedirectToAction("Index", "Cafe");
                 }
             }
             catch (SystemException erro)
@@ -113,6 +134,17 @@ namespace app_cadastro.Controllers
 
         public IActionResult CafeCriar()
         {
+            var usuario = _sessao.BuscarSessaoDoUsuario();
+
+            if (usuario != null)
+            {
+                @ViewBag.Nome = usuario.Nome;
+                @ViewBag.Perfil = usuario.Perfil;
+                @ViewBag.Email = usuario.Email;
+                @ViewBag.Celular = usuario.Celular;
+                @ViewBag.Aniversario = usuario.Aniversario;
+            }
+
             return View();
         }
         [HttpPost]
@@ -120,20 +152,59 @@ namespace app_cadastro.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                var usuario = _sessao.BuscarSessaoDoUsuario();
+                cafee.Organizador = usuario.Nome;
+
+                if (cafee.Cafe != null)
                 {
+
                     cafee = _cafeRepositorio.Adicionar(cafee);
 
-                    TempData["MensagemSucesso"] = "Cafe criado com sucesso";
+                    TempData["MensagemSucesso"] = "Vaquinha do Café criado com sucesso";
                     return RedirectToAction("index", "Cafe");
                 }
-                return View(cafee);
+                else
+                {
+                    TempData["MensagemErro"] = $"Ops, nome da vaquinha é obrigatório, preencha e tente novamente.";
+                    return RedirectToAction("CafeCriar", "Cafe");
+                }
+                
             }
             catch (Exception erro)
             {
                 TempData["MensagemErro"] = $"Ops, não conseguimos criar o cafe.";
                 return RedirectToAction("Index", "Cafe");
             }
+        }
+
+        [HttpPost]
+        public virtual IActionResult ParticipantesPagination(string sEcho, int iDisplayStart, int iColumns, int iDisplayLength, string sSearch, int id_cafe)
+        {
+            IEnumerable<Arquivos> query = _context.Arquivos.Where(x => x.Id_Cafe == id_cafe && x.StatusAprovado).ToList();
+
+            if (!string.IsNullOrEmpty(sSearch)) query = query.Where(x => x.NomeUsuario.ToString().ToLower()
+                .Contains(Utilities.RemoveSpecialCharacters(sSearch).ToLower())).AsQueryable();
+
+            int recordsTotal = query.Count();
+
+            List<Arquivos> aList = query.OrderBy(x => x.Data_Envio).Skip(iDisplayStart).ToList();
+
+            var data = aList.Select(x => new
+            {
+                id = x.ID,
+                nome_usuario = x.NomeUsuario,
+                status = x.StatusAprovado == true ? "Comprovante aprovado pelo Admin." : "Aguardando",
+            }).ToArray();
+
+            return Json(new
+            {
+                iDraw = 1,
+                sEcho,
+                iTotalRecords = recordsTotal,
+                iTotalDisplayRecords = recordsTotal,
+                aaData = data
+            });
+
         }
 
     }

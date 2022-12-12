@@ -23,7 +23,7 @@ namespace app_cadastro.Filters
                 {
                     context.Result = new RedirectToRouteResult(new RouteValueDictionary { {"controller","Login" },{ "action","Index"} });
                 }
-                if (contato.Perfil != Enums.PerfilEnum.Admin)
+                if (contato.Perfil != Enums.PerfilEnum.AdminAniversariantes && contato.Perfil != Enums.PerfilEnum.AdminCafe && contato.Perfil != Enums.PerfilEnum.Dev)
                 {
                     context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Home" }, { "action", "Index" } });
                 }

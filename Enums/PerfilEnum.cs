@@ -7,7 +7,9 @@ namespace app_cadastro.Enums
 {
     public enum PerfilEnum
     {
-        Admin = 1,
-        Padrao = 2,
+        Dev = 1,
+        AdminCafe = 2,
+        AdminAniversariantes = 3,
+        Padrao = 4
     }
 }

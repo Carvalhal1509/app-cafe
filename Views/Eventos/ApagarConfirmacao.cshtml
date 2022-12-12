@@ -6,7 +6,7 @@
     <h3>Realmente deseja apagar o evento de @Model.Organizador?</h3>
 
     <div class="btn-group" role="group">
-        <a class="btn btn-light btn-lg" role="button" asp-controller="Eventos" asp-action="Index">Cancelar exclusão</a>
+        <a class="btn btn-light" role="button" asp-controller="Eventos" asp-action="MeusEventos">Cancelar exclusão</a>
         <a class="btn btn-danger" role="button" asp-controller="Eventos" asp-action="Apagar" asp-route-id="@Model.Id">Confirmar exclusão</a>
     </div>
 </div>

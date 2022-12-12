@@ -91,17 +91,29 @@ namespace app_cadastro.Controllers
         [HttpPost]
         public IActionResult Alterar(Usuarios contato)
         {
-            var query = _context.Usuarios.Where(x => x.Email == contato.Email).FirstOrDefault();
-            
+
+            var query = _context.Usuarios.Where(x => x.Id == contato.Id).FirstOrDefault();
+            var buscaPorEmail = _context.Usuarios.Where(x => x.Email == contato.Email).FirstOrDefault();
+
             try
             {
-                if (query != null)
+                if (!contato.Email.EndsWith("@detran.ba.gov.br"))
+                {
+                    TempData["MensagemErro"] = "Email não pertence ao Detran, por favor, cadastre-se com email @detran.ba.gov.br";
+                    return RedirectToAction("PaginaAdm", "Registrar");
+                }
+                else if (query != null && contato.Email == query.Email)
                 {
                     contato.Senha = query.Senha;
                     _contatoRepositorio.Atualizar(contato);
                     TempData["MensagemSucesso"] = "Usuário atualizado com sucesso!";
                     return RedirectToAction("PaginaAdm", "Registrar");
                 }
+                else if (buscaPorEmail != null)
+                {
+                    TempData["MensagemErro"] = "Este email já está cadastrado no nosso sistema, troque o email e tente novamente";
+                    return RedirectToAction("PaginaAdm", "Registrar");
+                }              
                 else
                 {
                     TempData["MensagemErro"] = $"Ops, Não foi possivel alterar esse usuário, tente novamente!";

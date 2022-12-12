@@ -29,18 +29,28 @@ namespace app_cadastro.Controllers
 
         [HttpPost]
         public IActionResult SalvarUsuario(Usuarios Usuario, string informacaoEmail2, string informacaoSenha2)
-        {
+         {
 
             try
             {
+                if (!Usuario.Email.EndsWith("@detran.ba.gov.br"))
+                {
+                    return BadRequest(new Response<string>("", "Email não pertence ao Detran, por favor, cadastre-se com email @detran.ba.gov.br", false));
+                }
+
                 if (Usuario.Nome == null || Usuario.Email == null || Usuario.Senha == null || Usuario.Celular == null || informacaoEmail2 == null || informacaoSenha2 == null)
                 {
                     return BadRequest(new Response<string>("", "Campos com (*) são obrigatórios, preencha e tente novamente.", false));
                 }
 
-                if (Usuario.Senha != informacaoSenha2 || Usuario.Email != informacaoEmail2)
+                if (Usuario.Senha != informacaoSenha2)
                 {
-                    return BadRequest(new Response<string>("", "Email ou senha diferentes!", false));
+                    return BadRequest(new Response<string>("", "Senha não são iguais, digite senha igual à confirmação de senha e tente novamente", false));
+                }
+                
+                if (Usuario.Email != informacaoEmail2)
+                {
+                    return BadRequest(new Response<string>("", "Email não são iguais, digite email igual à confirmação de email e tente novamente", false));
                 }
 
                 Usuario.Senha = Hash.SHA512(Usuario.Senha);
@@ -52,7 +62,7 @@ namespace app_cadastro.Controllers
                     return BadRequest(new Response<string>("", "Email já cadastrado!", false));
                 }
 
-                Usuario.Perfil = Enums.PerfilEnum.Padrao;
+                Usuario.Perfil = Enums.PerfilEnum.Padrao;              
                 _context.Usuarios.Add(Usuario);
                 _context.SaveChanges();
 

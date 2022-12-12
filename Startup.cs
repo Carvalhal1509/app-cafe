@@ -24,8 +24,6 @@ namespace app_cadastro
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ArquivoContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("ArquivoContext")));
-           
 
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<BancoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DataBase")));
@@ -37,6 +35,8 @@ namespace app_cadastro
             services.AddScoped<IEventoRepositorio, EventoRepositorio>();
             services.AddScoped<ICafeRepositorio, CafeRepositorio>();
             services.AddScoped<IAniversariantesRepositorio, AniversariantesRepositorio>();
+            services.AddScoped<IAniversariantesDoMesRepositorio, AniversariantesDoMesRepositorio>();
+            services.AddScoped<ISugestaoRepositoriocs, SugestaoRepositoriocs> ();
             services.AddScoped<ISessao, Sessao>();
             services.AddScoped<IEmail, Email>();
             services.AddSession(o =>

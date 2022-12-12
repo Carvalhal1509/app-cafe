@@ -1,47 +1,154 @@
 ﻿@model IEnumerable<app_cadastro.Models.Arquivos>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Aprovar Comprovante Pix";
 }
 
-<div class="text-center">
-    <div class="mb-3 container row mt-3">
-        <div class="col-md-6">
-            <form action="/Arquivos/UploadImagem" enctype="multipart/form-data" for="formFile" class="form-label" method="post">
-                <label for="formFile" class="dis-block txt3 hov1 p-r-30 p-l-30"> Anexar comprovante de pagamento: </label>
-                <input type="file" class="btn btn-light btn-lg" name="arquivos" id="formFile" multiple />
-                <button type="submit" class="btn btn-warning btn-lg ms-2" style="width:20%">Salvar</button>
-            </form>
-        </div>
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-start">
+    <a class="btn btn-light ml-2 mt-2" role="button" asp-controller="Home" asp-action="Index">Voltar</a>
+</div>
+<br />
+
+
+<div class="container row mt-3 ml-5">
+    <div class="form-group col-sm-8" style="text-align: center">
+        <select id="id_cafe" class="form-control">
+            @foreach (var item in @ViewBag.ListaCafe)
+            {
+                <option value="@item.Id">@item.Cafe</option>
+            }
+        </select>
+    </div>
+    <div class="col-sm-4">
+        <button type="button" id="btn-buscar-dados" class="btn btn-success" onclick="BuscarDadosCafe();">Visualizar</button>
     </div>
 </div>
 
+<div class="container mt-2" id="resultado" style="display: none">
+    <div style="display: none">
+        <label for="txtId">Id: </label>
+        <span id="txtId"></span>
+    </div>
+    <div>
+        <label for="txtCafe">Nome: </label>
+        <span id="txtCafe"></span>
+    </div>
+    <div>
+        <label for="txtDataRealizacao">Data de Realização: </label>
+        <span id="txtDataRealizacao"></span>
+    </div>
 
-<div class="text-center container">
-    <table class="table-arquivos">
+    <br />
+
+    <table id="list_items" class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Descricao)
-                </th>
-
+                <th>ID</th>
+                <th>Descrição</th>
+                <th>Participante</th>
+                <th>Data Envio</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
-        <tbody>
-            @if (Model != null)
-            {
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Descricao)
-                        </td>
-                        <td>
-                            <a asp-action="Visualizar" asp-route-id="@item.ID"
-                               target="_blank">Download</a>
-                        </td>
-                    </tr>
-                }
-            }
-        </tbody>
+        <tbody></tbody>
+        <tfoot>
+            <tr>
+                <th>ID</th>
+                <th>Descrição</th>
+                <th>Participante</th>
+                <th>Data Envio</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </tfoot>
     </table>
- </div>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+    });
+
+    function buscarComprovantesPix(id_cafe) {
+        $('#list_items').dataTable({
+            'bPaginate': true,
+            'bJQueryUI': true,
+            'bProcessing': true,
+            'bServerSide': true,
+            "searching": true,
+            'bDestroy': true,
+            'sAjaxSource': `@Url.Action("ComprovantesPixPagination", "Arquivos")?id_cafe=${id_cafe}`,
+            'sServerMethod': 'POST',
+            'aoColumns': [
+                { 'mData': 'id_comprovante' },
+                { 'mData': 'descricao' },
+                { 'mData': 'nome_usuario' },
+                { 'mData': 'data_envio' },
+                { 'mData': 'visualizar' },
+                { 'mData': 'aprovar' }
+            ],
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/pt-BR.json"
+                }
+        });
+    }
+
+    function aprovar(id_comprovante) {
+        $.ajax({
+            type: 'POST',
+            data: {
+                'id_comprovante': id_comprovante
+            },
+            url: '@Url.Action("AprovarPix", "Arquivos")',
+            success: function (result) {
+                if (result.is_action) {
+                    BuscarDadosCafe(result.id_Cafe);
+                }
+                else {
+                    $('#msgError #erroMsg').html(result.error);
+                }
+            },
+            error: function (error)
+            {
+                $('#msgError #erroMsg').html(result.error);
+            },
+            datatype: 'json'
+        });
+    }
+
+    function visualizar(id) {
+        window.open(
+            `@Url.Action("Visualizar", "Arquivos")?id=${id}`, '_blank');
+    }
+
+    function BuscarDadosCafe() {
+        let id_cafe = $('#id_cafe').val();
+        $.ajax({
+            type: 'POST',
+            data: {
+                'id_cafe': id_cafe,
+            },
+            url: '@Url.Action("BuscarDadosCafe", "Arquivos")',
+            success: function (result) {
+                if (result.is_action) {
+                    $('#txtCafe').html(result.dados.cafe);
+                    $('#txtDataRealizacao').html(result.dados.dataCafe);
+                    $('#txtId').html(result.dados.id);
+                    buscarComprovantesPix(id_cafe)
+                    $('#resultado').show();
+                }
+                else {
+                    $('#msgError #erroMsg').html(result.error);
+                }
+            },
+            error: function (error)
+            {
+                $('#msgError #erroMsg').html(result.error);
+            },
+            datatype: 'json'
+        });
+    }
+
+</script>

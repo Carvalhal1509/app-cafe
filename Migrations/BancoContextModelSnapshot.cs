@@ -69,12 +69,8 @@ namespace app_cadastro.Migrations
                     b.Property<int?>("UsuarioId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UsuarioModalId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UsuarioModalId");
 
                     b.ToTable("Eventos");
                 });
@@ -119,8 +115,7 @@ namespace app_cadastro.Migrations
             modelBuilder.Entity("app_cadastro.Models.EventoModel", b =>
                 {
                     b.HasOne("app_cadastro.Models.Usuarios", "UsuarioModal")
-                        .WithMany("Contatos")
-                        .HasForeignKey("UsuarioModalId");
+                        .WithMany("Contatos");
 
                     b.Navigation("UsuarioModal");
                 });

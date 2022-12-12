@@ -18,11 +18,10 @@ namespace app_cadastro.Repositorio
         {
             return bancoContext1.Eventos.FirstOrDefault(x => x.Id == id);
         }
-        public List<EventoModel> BuscarTodos(int usuarioId)
+        public List<EventoModel> BuscarTodos()
         {
-            return bancoContext1.Eventos.Where(x => x.UsuarioId == usuarioId && !x.StatusExc).ToList();
+            return bancoContext1.Eventos.Where(x => !x.StatusExc).ToList();
         }
-
        
         public EventoModel Adicionar(EventoModel evento)
         {
@@ -45,17 +44,26 @@ namespace app_cadastro.Repositorio
             return eventoDb;
         }
 
-        public bool Apagar(int id)
+        public bool Apagar(int id, int id_usuario)
         {
             EventoModel eventoDb = ListarPorId(id);
-            if (eventoDb == null) throw new System.Exception("Houve um erro na exclusão do evento do usuário!");
-            eventoDb.StatusExc = true;
+            if (eventoDb == null) throw new System.Exception("Houve um erro na exclusão do evento do evento!");
 
+            var query = bancoContext1.Eventos.Where(x => x.UsuarioId == id_usuario).FirstOrDefault();
+            if (query == null) throw new System.Exception("Usuário que está tentando excluir o evendo não é quem criou o mesmo!");
 
-            bancoContext1.Eventos.Update(eventoDb);
-            bancoContext1.SaveChanges();
-
-            return true;
+            if(query!= null)
+            {
+                eventoDb.StatusExc = true;
+                bancoContext1.Eventos.Update(eventoDb);
+                bancoContext1.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        
         }
     }
 }

@@ -1,37 +1,51 @@
 ﻿@model CafeModel
 @{
-    Layout = "_Layout Deslogada";
+    Layout = "_Layout";
     ViewData["Title"] = "Criar Cafe";
 
 }
 <div class="text-center mt-3">
-    <h3>Criar Cafe</h3>
+    <h3>Criar Vaquinha Café</h3>
+
+    <div class="container">
+        @if (TempData["MensagemSucesso"] != null)
+        {<div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="btn btn-danger btn-close btn-sm close-alert" data-bs-dismiss="alert" arial-label="Close"></button>
+                @TempData["MensagemSucesso"]
+            </div>
+        }
+
+        @if (TempData["MensagemErro"] != null)
+        {<div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="btn btn-danger btn-close btn-sm close-alert" data-bs-dismiss="alert" arial-label="Close"></button>
+                @TempData["MensagemErro"]
+            </div>
+        }
+    </div>
 
 </div>
 <div id="overlay" class="overlay container">
     <form asp-controller="Cafe" asp-action="CafeCriar" method="post">
         <div class="form-group">
-            <label>Organizador</label>
-            <input type="text" asp-for="Organizador" class="form-control">
+            <label>Organizador*</label>
+            <input type="text" asp-for="Organizador" class="form-control" value="@ViewBag.Nome" disabled>
 
         </div>
 
         <div class="form-group">
-            <label>Setor</label>
+            <label>Nome da Vaquinha*</label>
             <input type="text" asp-for="Cafe" class="form-control">
-
         </div>
 
         <div class="wrap-input100 validate-input">
-            <span class="label-input100"> Data do cafe</span>
-            <input type="date" asp-for="DataCafe" class="input100" placeholder="DD/MM/AAAA">
-            <span class="focus-input100"></span>
+            <label>Data do café*</label>
+            <input type="date" asp-for="DataCafe" class="form-control" placeholder="DD/MM/AAAA">
         </div>
 
         <br />
 
-        <a class="btn btn-light btn-lg" role="button" asp-controller="Cafe" asp-action="Index">Voltar</a>
-        <button type="submit" class="btn btn-warning btn-lg ms-2">Continuar</button>
+        <a class="btn btn-light" role="button" asp-controller="Cafe" asp-action="Index">Voltar</a>
+        <button type="submit" class="btn btn-warning ms-2">Continuar</button>
     </form>
 </div>
 

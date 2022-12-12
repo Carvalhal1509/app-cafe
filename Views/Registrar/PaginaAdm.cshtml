@@ -11,20 +11,24 @@
 </div>
 <br />
 
-<div class="container">
+<div class="container col-sm-10">
     @if (TempData["MensagemSucesso"] != null)
-    {<div class="alert alert-success" role="alert">
-            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
+    {<div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="btn btn-danger btn-close btn-sm close-alert" data-bs-dismiss="alert" arial-label="Close"></button>
             @TempData["MensagemSucesso"]
         </div>
     }
 
     @if (TempData["MensagemErro"] != null)
-    {<div class="alert alert-success" role="alert">
-            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
+    {<div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="btn btn-danger btn-close btn-sm close-alert" data-bs-dismiss="alert" arial-label="Close"></button>
             @TempData["MensagemErro"]
         </div>
     }
+</div>
+
+<div class="text-center">
+    <img style="" src="~/Image/perfil.gif" width="150px" class="" alt="">
 </div>
 
 
@@ -41,6 +45,7 @@
                 <th scope="col">Celular</th>
                 <th scope="col">Aniversário</th>
                 <th scope="col">Perfil</th>
+                <th scope="col">Setor</th>
                 <th scope="col">Ação</th>
             </tr>
         </thead>
@@ -49,22 +54,23 @@
             {
                 foreach (Usuarios contato in Model)
                 {
-                    <tr>
-                        <th scope="row" style="display:none">@contato.Id</th>
-                        <td>@contato.Nome</td>
-                        <td>@contato.Email</td>
-                        <td>@contato.Celular</td>
-                        <td>@contato.Aniversario.ToString("dd/MM/yyyy")</td>
-                        <td>@(contato.Perfil == app_cadastro.Enums.PerfilEnum.Admin ? "Administrador" : "Padrão")</td>
+            <tr>
+                <th scope="row" style="display:none">@contato.Id</th>
+                <td>@contato.Nome</td>
+                <td>@contato.Email</td>
+                <td>@contato.Celular</td>
+                <td>@contato.Aniversario.ToString("dd/MM/yyyy")</td>
+                <td>@(contato.Perfil == app_cadastro.Enums.PerfilEnum.AdminCafe ? "Admin. Café" : contato.Perfil == app_cadastro.Enums.PerfilEnum.AdminAniversariantes ? "Admin. Aniversariantes" : contato.Perfil == app_cadastro.Enums.PerfilEnum.Dev ? "Desenvolvedor" : "Padrão")</td>
+                <td>@contato.Setor</td>
 
-                        <td>
-                            <div class="btn-group" role="group">
-                                <a role="button" class="btn btn-light" asp-route-id="@contato.Id" asp-controller="Contato" asp-action="Editar">Editar</a>
-                                <a role="button" class="btn btn-danger" onclick="modalApagar(@contato.Id)">Apagar</a>
-                            </div>
-                        </td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a role="button" class="btn btn-light" asp-route-id="@contato.Id" asp-controller="Contato" asp-action="Editar">Editar</a>
+                        <a role="button" class="btn btn-danger" onclick="modalApagar(@contato.Id)">Apagar</a>
+                    </div>
+                </td>
 
-                    </tr>
+            </tr>
 
                 }
             }
@@ -87,7 +93,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a id="bottonExcluir" role="button" class="btn btn-danger" >Excluir</a>
+                    <a id="bottonExcluir" role="button" class="btn btn-danger">Excluir</a>
                     <button type="button" class="btn btn-light" title="fecharApagar" id="fecharApagar" onclick="modalFecharApagar()">Não</button>
 
                 </div>

@@ -20,9 +20,25 @@
         </div>
         <ul class="nav-links">
 
-            @if (@ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.Admin)
-            {
-                <li>
+
+            <li>
+                @if (@ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.Dev)
+                {
+                    <div class="iocn-link">
+                        <a href="#">
+                            <i class="material-symbols-outlined">weather_snowy</i><span class="link_name">Sugestões</span>
+                        </a>
+                        <i class='bx bxs-chevron-down arrow'></i>
+                    </div>
+                    <ul class="sub-menu">
+                        <li><a asp-controller="Sugestao" asp-action="Index">Sugestões</a></li>                 
+                    </ul>
+                }
+            </li>
+
+            <li>
+                @if (@ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.Dev || @ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.AdminAniversariantes || @ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.AdminCafe)
+                {
                     <div class="iocn-link">
                         <a href="#">
                             <i class="material-symbols-outlined">person</i><span class="link_name">Usuários</span>
@@ -32,12 +48,10 @@
                     <ul class="sub-menu">
                         <li><a asp-controller="Registrar" asp-action="PaginaAdm">Ativos</a></li>
                         <li><a asp-controller="Registrar" asp-action="UsuariosInativos">Inativos</a></li>
-                        @*<li><a asp-controller="Registrar" asp-action="PaginaAdm"><i class=""></i><span class="link_name"></span>Ativos</a></li>
-                    <li><a asp-controller="Registrar" asp-action="UsuariosInativos"><i class=""></i><span class="link_name"></span>Inativos</a></li>*@
                     </ul>
-                </li>
+                }
+            </li>
 
-            }
             <li>
                 <div class="iocn-link">
                     <a href="#">
@@ -46,15 +60,13 @@
                     <i class='bx bxs-chevron-down arrow'></i>
                 </div>
                 <ul class="sub-menu">
-                    <li><a asp-controller="Arquivos" asp-action="Index">Comprovante Pix</a></li>
+                    @if (@ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.Dev || @ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.AdminCafe)
+                    {
+                        <li><a asp-controller="Arquivos" asp-action="Index">Comprovante Pix</a></li>
+                    }
                     <li><a asp-controller="Cafe" asp-action="Index">Vaquinha do Café</a></li>
-                    @*<li><a asp-controller="Registrar" asp-action="PaginaAdm"><i class=""></i><span class="link_name"></span>Ativos</a></li>
-        <li><a asp-controller="Registrar" asp-action="UsuariosInativos"><i class=""></i><span class="link_name"></span>Inativos</a></li>*@
                 </ul>
             </li>
-           
-
-
             <li>
                 <div class="iocn-link">
                     <a href="#">
@@ -64,8 +76,10 @@
                 </div>
                 <ul class="sub-menu">
                     <li><a asp-controller="Eventos" asp-action="Index">Eventos Ativos</a></li>
+                    <li><a asp-controller="Eventos" asp-action="MeusEventos">Meus Eventos</a></li>
                 </ul>
             </li>
+
             <li>
                 <div class="iocn-link">
                     <a href="#">
@@ -75,6 +89,10 @@
                 </div>
                 <ul class="sub-menu">
                     <li><a asp-controller="Aniversariantes" asp-action="Index">Aniversariantes do Mês</a></li>
+                    @if (@ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.Dev || @ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.AdminAniversariantes)
+                    {
+                        <li><a asp-controller="Aniversariantes" asp-action="ItemAniversariantes">Lista de Itens</a></li>
+                    }
                 </ul>
             </li>
         </ul>
@@ -89,6 +107,7 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" onclick="modalPerfil()" href="#">Perfil</a>
                     <a class="dropdown-item" onclick="modalAlterarsenha()" href="#">Alterar senha</a>
+                    <a class="dropdown-item" onclick="modalSugestoes()" href="#">Sugestões</a>
                     <a class="dropdown-item" asp-controller="Login" asp-action="Sair"><span class='bx bx-log-out' style="color:black"> Sair</span></a>
                 </div>
             </div>
@@ -100,25 +119,53 @@
         </div>
     </section>
 
-
-    <div id="modalAlterarSenha" class="modalAlterarSenha">
-        <div class="modal fade" id="modal-Alterar-Senha" aria-hidden="true">
-            <div class="col-sm-12">
-                <div id="errorModal" style="display: none">
-                    <div id="msgError" class="alert alert-danger">
-                        <i class="fa fa-ban"></i>
-                        <button class="close" onclick="fechar_alerta();" aria-hidden="true" type="button">×</button>
-
-                        <span id="erroMsg"></span>
+    <div id="modalSugestoes">
+        <div class="modal fade" id="modal-Sugestoes" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <button title="Fechar" class="fechar" id="fechar" onclick="modalFecharSugestoes()">x</button>
+                    <div class="modal-header">
+                        <h4 class="modal-title" style=" text-align: center;">Sugestões</h4>
                     </div>
-                </div>
-                <div id="sucessModal" style="display: none">
-                    <div id="msgSucess" class="alert alert-success">
-                        <i class="fa fa-ban"></i>
-                        <button class="close" onclick="fechar_alerta();" aria-hidden="true" type="button">×</button><span id="sucessMsg"></span>
+
+                    <div class="col-sm-12 mt-1">
+                        <div id="errorModal-sugestao" style="display: none">
+                            <div id="msgError-sugestao" class="alert alert-danger">
+                                <i class="fa fa-ban"></i>
+                                <button class="close" onclick="fechar_alerta();" aria-hidden="true" type="button">×</button>
+                                <span id="erroMsg-sugestao"></span>
+                            </div>
+                        </div>
+                        <div id="sucessModal-sugestao" style="display: none">
+                            <div id="msgSucess-sesugestaonha" class="alert alert-success">
+                                <i class="fa fa-ban"></i>
+                                <button class="close" onclick="fechar_alerta();" aria-hidden="true" type="button">×</button>
+                                <span id="sucessMsg-sugestao"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-body">
+                        <div>
+                            Digite sua sugestão para o Detran - Web Café:
+                        </div>
+                        <div class="mt-2">
+                            <textarea type="text" id="descricao-sugestao" name="descricao-sugestao" class="form-control"> </textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button id="btn-confirmar-sugestão" class="btn btn-primary pull-right" onclick="SalvarSugestao()">Salvar</button>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+   
+
+    <div id="modalAlterarSenha" class="modalAlterarSenha">
+        <div class="modal fade" id="modal-Alterar-Senha" aria-hidden="true">
+
             <div class="modal-dialog modal-dialog-centered" role="document">
 
                 <div class="modal-content">
@@ -126,6 +173,24 @@
                     <div class="modal-header">
                         <h4 class="modal-title">Alterar Senha</h4>
                     </div>
+
+                    <div class="col-sm-12 mt-1">
+                        <div id="errorModal-senha" style="display: none">
+                            <div id="msgError-senha" class="alert alert-danger">
+                                <i class="fa fa-ban"></i>
+                                <button class="close" onclick="fechar_alerta();" aria-hidden="true" type="button">×</button>
+                                <span id="erroMsg-senha"></span>
+                            </div>
+                        </div>
+                        <div id="sucessModal-senha" style="display: none">
+                            <div id="msgSucess-senha" class="alert alert-success">
+                                <i class="fa fa-ban"></i>
+                                <button class="close" onclick="fechar_alerta();" aria-hidden="true" type="button">×</button>
+                                <span id="sucessMsg-senha"></span>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="modal-body" style="padding-bottom: 0px; text-align: center; font-size: 18px;">
 
                         <div class="row">
@@ -221,7 +286,7 @@
                             </div>
                         </div>
                         <div class="Titulo-informacao-usuario">
-                            Data de nascimento:
+                            Aniversário:
                         </div>
                         <div class="card">
                             <div class="card-body">
@@ -244,6 +309,15 @@
 
 <script type="text/javascript">
 
+    function modalSugestoes()
+    {
+        $('#modal-Sugestoes').modal('show');
+    }
+
+    function modalFecharSugestoes() {
+        $('#modal-Sugestoes').modal('hide');
+    }
+
     function modalPerfil()
     {
         $('#modal-perfil').modal('show');
@@ -256,45 +330,81 @@
     function modalAlterarsenha() {
         $('#modal-Alterar-Senha').modal('show');
     }
+
     function modalfecharAlterarsenha() {
         $('#modal-Alterar-Senha').modal('hide');
     }
-        function SalvarUsuario()
-    {
-    $('#msgError #erroMsg').html();
-    $('#item_form #msgError').hide();
-    $.ajax({
-        type: 'POST',
-        data: {
-            'SenhaAtual': $('#AlterarSenha').val(),
-            'NovaSenha': $('#NovaSenha').val(),
-            'ConfirmarSenha': $('#ConfirmarNovaSenha').val(),
-        },
-        url: '@Url.Action("AlterarSenha", "Home")',
-        success: function (result)
-        {
-            $('.overlay').hide();
-            $('#msgSucess #sucessMsg').html('Senha modificada  com sucesso!!!');
-            $('#sucessModal').show();
-            $('#senha').val('');
-            $('#confirmarSenha').val('');
-            $('#email').val('');
-            $('#confirmarEmail').val('');
-            $('#telefone').val('');
-            $('#nome').val('');
-            $('#data').val('');
-        },
-        error: function (error)
-        {
-            $('#msgError #erroMsg').html(error.responseJSON.message);
-            $('#errorModal').show();
-        },
-    });
 
-}
+    function SalvarUsuario() {
+        $('#errorModal-senha').hide();
+        $('#sucessModal-senha').hide();
+        $('#msgError #erroMsg').html();
+        $('#item_form #msgError').hide();
+        $.ajax({
+            type: 'POST',
+            data: {
+                'SenhaAtual': $('#AlterarSenha').val(),
+                'NovaSenha': $('#NovaSenha').val(),
+                'ConfirmarSenha': $('#ConfirmarNovaSenha').val(),
+            },
+            url: '@Url.Action("AlterarSenha", "Home")',
+            success: function (result) {
+                $('.overlay').hide();
+                $('#sucessMsg-senha').html('Senha modificada  com sucesso!!!');
+                $('#sucessModal-senha').show();
+                $('#AlterarSenha').val('');
+                $('#NovaSenha').val('');
+                $('#ConfirmarNovaSenha').val('');
+            },
+            error: function (error) {
+                $('#msgError-senha #erroMsg-senha').html(error.responseJSON.message);
+                $('#errorModal-senha').show();
+                $('#AlterarSenha').val('');
+                $('#NovaSenha').val('');
+                $('#ConfirmarNovaSenha').val('');
+            },
+        });
+    }
+
+    function SalvarSugestao() {
+        $('#errorModal-sugestao').hide();
+        $('#sucessModal-sugestao').hide();
+        $('#msgError #erroMsg').html();
+        $('#item_form #msgError').hide();
+        $.ajax({
+            type: 'POST',
+            data: {
+                'Descricao': $('#descricao-sugestao').val(),
+            },
+            url: '@Url.Action("Criar", "Sugestao")',
+            success: function (result) {
+                if (result.is_action) {
+                    $('.overlay').hide();
+                    $('#sucessMsg-sugestao').html('Sugestão enviada com sucesso!!!');
+                    $('#sucessModal-sugestao').show();
+                    $('#descricao-sugestao').val('');
+                }
+                else {
+                    $('#msgError-sugestao #erroMsg-sugestao').html(result.error);
+                    $('#errorModal-sugestao').show();
+                    $('#descricao-sugestao').val('');
+                }
+            },
+            error: function (error) {
+                $('#msgError-sugestao #erroMsg-sugestao').html(error.error);
+                $('#errorModal-sugestao').show();
+                $('#descricao-sugestao').val('');
+            },
+        });
+    }
+
     function fechar_alerta() {
         $('#errorModal').hide();
         $('#sucessModal').hide();
+        $('#errorModal-senha').hide();
+        $('#sucessModal-senha').hide();
+        $('#errorModal-sugestao').hide();
+        $('#sucessModal-sugestao').hide();
     }
 
     function mostrarSenha() {

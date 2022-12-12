@@ -13,9 +13,8 @@
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                         <div class="card">
+                                <img class="imagem-detran-login" src="/Image/Icone-Login.svg">             
                             <div class="card-body p-5">
-                                <h3 class="login-title">Web Café & Eventos</h3>
-                                
                                 <div>
                                     @if (TempData["MensagemSucesso"] != null)
                                     {<div class="alert alert-success" role="alert">
@@ -25,7 +24,7 @@
                                     }
 
                                     @if (TempData["MensagemErro"] != null)
-                                    {<div class="alert alert-success" role="alert">
+                                    {<div class="alert alert-danger" role="alert">
                                             <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
                                             @TempData["MensagemErro"]
                                         </div>
@@ -54,10 +53,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <p class="label-login-Esqueceu-a-Senha">
-                                    Esqueceu sua senha?
-                                    <a class="text-register-RedefinirSenha" asp-action="RedefinirSenha" asp-controller="Login" >Redefinir senha</a>
-                                </p>
+                                <a class="text-register-RedefinirSenha text-center" asp-action="RedefinirSenha" asp-controller="Login">Esqueceu sua senha?</a>
+                           
                             </div>
                         </div>
                     </div>

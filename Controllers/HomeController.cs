@@ -34,7 +34,7 @@ namespace app_cadastro.Controllers
                 @ViewBag.Perfil = usuario.Perfil;
                 @ViewBag.Email = usuario.Email;
                 @ViewBag.Celular = usuario.Celular;
-                @ViewBag.Aniversario = usuario.Aniversario;
+                @ViewBag.Aniversario = usuario.Aniversario.ToString("dd/MM/yyyy");
 
                 return View();
             }

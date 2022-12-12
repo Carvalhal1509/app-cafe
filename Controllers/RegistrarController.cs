@@ -68,7 +68,7 @@ namespace app_cadastro.Controllers
                 email = x.Email,
                 celular = x.Celular,
                 dtc_nascimento = x.Aniversario.ToString("dd/MM/yyyy"),
-                perfil = x.Perfil == Enums.PerfilEnum.Admin ? "Administrador" : "Padrão",
+                perfil = x.Perfil == Enums.PerfilEnum.AdminAniversariantes ? "Admin. Aniversariantes" : x.Perfil == Enums.PerfilEnum.AdminCafe ? "Admin. Café" : x.Perfil == Enums.PerfilEnum.Dev ? "Desenvolvedor" : "Padrão",
                 reativar = $"<a href='#' type='button' class='btn btn-success' onclick='modalReativar({x.Id})'>Reativar</a>",
             }).ToArray();
 
@@ -125,6 +125,10 @@ namespace app_cadastro.Controllers
                 if (contato.Nome == null || contato.Email == null || contato.Celular == null)
                 {
                     TempData["MensagemErro"] = "Campos com (*) são obrigatórios, preencha e tente novamente.";
+                }
+                else if (!contato.Email.EndsWith("@detran.ba.gov.br"))
+                {
+                    TempData["MensagemErro"] = "Email não pertence ao Detran, por favor, cadastre-se com email @detran.ba.gov.br";
                 }
                 else
                 {

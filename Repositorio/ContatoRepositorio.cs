@@ -52,6 +52,7 @@ namespace app_cadastro.Repositorio
             contatoDb.Aniversario = contato.Aniversario;
             contatoDb.Celular = contato.Celular;
             contatoDb.Perfil = contato.Perfil;
+            contatoDb.Setor = contato.Setor;
 
             bancoContext1.Usuarios.Update(contatoDb);
             bancoContext1.SaveChanges();

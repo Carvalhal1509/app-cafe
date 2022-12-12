@@ -18,7 +18,7 @@ namespace app_cadastro.Repositorio
 
         public List<Usuarios> BuscarTodos()
         {
-            return bancoContext1.Usuarios.Where(x => !x.StatusExc).ToList();
+            return bancoContext1.Usuarios.Where(x => !x.StatusExc && x.Aniversario.Month == DateTime.Now.Month).ToList();
         }
 
         public List<Usuarios> ListarTodos()

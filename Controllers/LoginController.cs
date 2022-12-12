@@ -44,10 +44,15 @@ namespace app_cadastro.Controllers
         {
             try
             {
+                Usuarios contato = _contatoRepositorio.BuscarPorLogin(loginModel.Email);
+
                 if (ModelState.IsValid)
                 {
-                    Usuarios contato = _contatoRepositorio.BuscarPorLogin(loginModel.Email);
-                    if (contato.StatusExc == false)
+                    if (!loginModel.Email.EndsWith("@detran.ba.gov.br"))
+                    {
+                        TempData["MensagemErro"] = "Email não pertence ao DETRAN, por favor, entre com seu email pessoal do DETRAN";
+                    }
+                    else if (contato.StatusExc == false)
                     {
                         loginModel.Senha = Hash.SHA512(loginModel.Senha);
 
@@ -56,10 +61,16 @@ namespace app_cadastro.Controllers
                             _sessao.CriarSessaoDoUsuario(contato);
                             return RedirectToAction("Index", "Home");
                         }
-
-                        TempData["MensagemErro"] = $"Email ou Senha invalido. Por favor,tente novamente!.";
+                        else
+                        {
+                            TempData["MensagemErro"] = $"Email ou Senha inválidos. Por favor,tente novamente!.";
+                        }
                     }
-                    TempData["MensagemErro"] = $"Este usuário não tem mais acesso à esse sistema!!";
+                    else
+                    {
+                        TempData["MensagemErro"] = $"Este usuário não tem mais acesso à esse sistema, Por favor, contate algum Administrador!!";
+                    }
+                    
                 }
                 return View("index");
             }
@@ -69,6 +80,7 @@ namespace app_cadastro.Controllers
             }
             return RedirectToAction("Index");
         }
+
         [HttpPost]
         public IActionResult EnviarLinkParaRedefinirSenha(RedefinirSenhaModel redefinirSenhaModel)
         {

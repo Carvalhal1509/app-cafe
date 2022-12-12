@@ -129,6 +129,13 @@ a.Provide sufficient contrast against white background
     background-repeat: no-repeat;
 }
 
+.imagem-detran-login {
+    width: 130px;
+    justify-content: center;
+    /*margin-top: 20px;*/
+    margin-block: -55px;
+}
+
 /*Imagem de registro*/
 .background-image-registrar {
     /*background-image: url('/image/wepik-photo-mode-2022927-83958.png');*/
@@ -144,6 +151,8 @@ a.Provide sufficient contrast against white background
     background-size: cover;
     background-repeat: no-repeat;
 }
+
+
 
 .background-image-home {
     /*background-image: url('/Image/Bakcground-Cafe.png');*/
@@ -167,6 +176,14 @@ a.Provide sufficient contrast against white background
     font-size: 20px;
 }
 
+.inouteItem {
+    display: block;
+    font-size: 22px;
+    line-height: 1.2;
+    padding: 0px 19px;
+}
+
+
 .card {
     position: relative;
     display: -ms-flexbox;
@@ -180,10 +197,9 @@ a.Provide sufficient contrast against white background
     background-clip: border-box;
     border: 1px solid rgb(255 255 255 / 20%);
     border-radius: 31px;
-    background: rgb(0 0 0 / 10%);
-    background: rgb(255 255 255 / 20%);
+    background: rgb(0 0 0/ 90%);
     box-shadow: 1px 2px 10px #000, 3px 6px 20px #000;
-
+    text-align: center;
 }
 
 .card-home {
@@ -252,8 +268,9 @@ a.Provide sufficient contrast against white background
 .label-login {
     color: rgba(255, 255, 255, 0.9);
     font-weight: 400;
-    font-size: 15px;
+    font-size: 25px;
     text-shadow: 1px 1px black;
+    margin-top: 13px;
 }
 
 .dp-login{
@@ -305,8 +322,8 @@ a.Provide sufficient contrast against white background
 }
 
 .btn-warning {
-    color: #ffffff;
-    background-color: #ff8b07;
+   /* color: #ffffff;*/
+    background-color: #e9cd05;
     border-radius: 40px;
     border: none;
 }
@@ -314,9 +331,9 @@ a.Provide sufficient contrast against white background
 .input100 {
     display: block;
     width: 100%;
-    height: 50px;
+    height: 46px;
     background: white;
-    font-size: 22px;
+    font-size: 25px;
     color: #c3c3c3;
     line-height: 1.2;
     padding: 0px 30px;
@@ -386,7 +403,6 @@ a.Provide sufficient contrast against white background
 
 .dropdown-menu {
     min-width: -webkit-fill-available !important;
-    ;
 }
 
 .logo-details {

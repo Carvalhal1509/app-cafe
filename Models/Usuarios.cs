@@ -31,12 +31,13 @@ namespace app_cadastro.Models
         [Required(ErrorMessage = "Selecione o Perfil")]
         public PerfilEnum Perfil { get; set; }
 
+        public SetorEnum? Setor { get; set; }
+        
         public bool StatusExc { get; set; }
 
         public bool SenhaValida(string senha)
         {
             return Senha == senha;
         }
-        public virtual List<EventoModel> Contatos { get; set; }
     }
 }
