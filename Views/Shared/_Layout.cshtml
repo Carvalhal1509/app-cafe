@@ -99,7 +99,7 @@
     </div>
     <section class="home-section vh-100">
         <div class="home-content">
-            <i class='bx bx-menu'></i>
+            <i class='bx bx-menu close'></i>
             <div class="dropdown">
                 <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <b><span>Olá, @ViewBag.Nome </span></b>
@@ -448,5 +448,6 @@
     let sidebarBtn = document.querySelector(".bx-menu");
     sidebarBtn.addEventListener("click", () => {
         sidebar.classList.toggle("close");
+        sidebarBtn.classList.toggle("close");
     });
 </script>

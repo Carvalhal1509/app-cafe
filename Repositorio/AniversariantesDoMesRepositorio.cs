@@ -57,7 +57,10 @@ namespace app_cadastro.Repositorio
 
         public AniversariantesItemUsuarioModel AdicionarEscolha(AniversariantesItemUsuarioModel item)
         {
+            var query = ListarItemPorId(item.Id_Item);
+            query.StatusExc = true;          
             bancoContext1.AniversariantesItemUsuario.Add(item);
+            bancoContext1.ItemAniversario.Update(query);
             bancoContext1.SaveChanges();
             return item;
         }
@@ -65,7 +68,7 @@ namespace app_cadastro.Repositorio
         public AniversariantesModel Atualizar(AniversariantesModel contato)
         {
             AniversariantesModel contatoDb = ListarPorId(contato.Id);
-            if (contatoDb == null) throw new System.Exception("Houve um erro na atualizacão dos dados do usuário!");
+            if (contatoDb == null) throw new System.Exception("Houve um erro na atualizacão da lista de aniversariantes!");
             contatoDb.Nome = contato.Nome;
             contatoDb.Descricao = contato.Descricao;
             contatoDb.DataRealizacao = contato.DataRealizacao;
@@ -79,11 +82,18 @@ namespace app_cadastro.Repositorio
         {
 
             AniversariantesModel contatoDb = ListarPorId(id);
-            if (contatoDb == null) throw new System.Exception("Houve um erro na exclusão dos dados do usuário!");
+            var query = ListarTodosItens().Where(x => x.StatusExc == true).ToList();
+            if (contatoDb == null) throw new System.Exception("Houve um erro na exclusão da lista de aniversariantes");
             contatoDb.StatusExc = true;
 
+            for (int i = 0; i < query.Count; i++)
+            {
+                query[i].StatusExc = false;
+                bancoContext1.ItemAniversario.Update(query[i]);
+            }
 
             bancoContext1.AniversariantesDoMes.Update(contatoDb);
+
             bancoContext1.SaveChanges();
 
             return true;
@@ -96,10 +106,8 @@ namespace app_cadastro.Repositorio
 
             ItemAniversarioModel contatoDb = ListarItemPorId(id);
             if (contatoDb == null) throw new System.Exception("Houve um erro na exclusão do item!");
-            contatoDb.StatusExc = true;
 
-
-            bancoContext1.ItemAniversario.Update(contatoDb);
+            bancoContext1.ItemAniversario.Remove(contatoDb);
             bancoContext1.SaveChanges();
 
             return true;

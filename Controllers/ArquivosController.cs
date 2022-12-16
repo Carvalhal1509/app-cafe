@@ -59,7 +59,7 @@ namespace app_cadastro.Controllers
                 descricao = x.Descricao,
                 nome_usuario = x.NomeUsuario,
                 data_envio = x.Data_Envio.ToString("dd/MM/yyy"),
-                visualizar = $"<a href='#' type='button' class='btn btn-primary' onclick='visualizar({x.ID})'>Visualizar</a>",
+                visualizar = x.Dados == null ? "": $"<a href='#' type='button' class='btn btn-primary' onclick='visualizar({x.ID})'>Visualizar</a>",
                 aprovar = $"<a href='#' type='button' class='btn btn-success' onclick='aprovar({x.ID})'>Aprovar</a>"
             }).ToArray();
 
@@ -103,7 +103,17 @@ namespace app_cadastro.Controllers
             }
             else
             {
-                TempData["MensagemErro"] = $"Ops, Não foi possivel enviar o seu comprovante, tente novamente!.";
+                Arquivos arqui = new Arquivos()
+                {
+                    Id_Cafe = id_cafe,
+                    Id_Usuario = usuario.Id,
+                    NomeUsuario = usuario.Nome
+                };
+
+                _context.Arquivos.Add(arqui);
+                _context.SaveChanges();
+
+                TempData["MensagemSucesso"] = $"Participação efetuada com sucesso! Aguarde aprovação do Administrador para entrar na lista de participantes";
             }
 
             return RedirectToAction("Index", "Cafe");
@@ -122,7 +132,7 @@ namespace app_cadastro.Controllers
             string error = string.Empty;
             bool is_action = false;
 
-            var dados = _context.Cafe.Where(x => x.Id == id_cafe).FirstOrDefault();
+            var dados = _context.Cafe.Where(x => x.Id_Vaquinha_Cafe == id_cafe).FirstOrDefault();
 
             try
             {

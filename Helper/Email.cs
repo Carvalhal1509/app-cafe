@@ -33,13 +33,11 @@ namespace app_cadastro.Helper
                 mail.Body = mensagem;
                 mail.IsBodyHtml = true;
                 mail.Priority = MailPriority.High;
-                using (SmtpClient smtp = new SmtpClient(host,porta))
-                {
-                    smtp.Credentials = new NetworkCredential(username,senha);
-                    smtp.EnableSsl = true;
-                    smtp.Send(mail);
-                    return true;
-                }
+                SmtpClient smtp = new SmtpClient(host, porta);
+                smtp.Credentials = new NetworkCredential(username,senha);
+                smtp.EnableSsl = false;
+                smtp.Send(mail);
+                return true;
 
             }
             catch(System.Exception e)

@@ -23,10 +23,19 @@
             <div class="box-body col-x-12">
 
                 <div id="list_header">
+                    <div id="msgSucess" class="alert alert-success alert-dismissable" style="display: none;">
+                        <i class="fa fa-ban"></i>
+                        <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+                      
+                        <span id="sucessMsg"></span>
+                    </div>
+                </div>
+
+                <div id="list_header">
                     <div id="msgError" class="alert alert-danger alert-dismissable" style="display: none;">
                         <i class="fa fa-ban"></i>
                         <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
-                        <b>Erro</b>
+
                         <span id="erroMsg"></span>
                     </div>
                 </div>
@@ -139,6 +148,7 @@
     {
         $('#msgError #erroMsg').html();
         $('item_form #msgError').hide();
+        let ide_item = $('#btn-confirmar-reativar').attr('id-target');
 
         $.ajax({
             type: 'POST',
@@ -149,12 +159,17 @@
             url: '@Url.Action("EditarItem", "Aniversariantes")',
             success: function (result) {
                 if (result.is_action) {
+                    $('#modal-reativar-editar').modal('hide');
                     $('#msgSucess #sucessMsg').html('Edição efetuada com sucesso!!!!!!');
-                    $('#modal-reativar').modal('hide');
+                    $('#msgSucess').show();
+                    $('#ItemEditar').val('')
+
                     listar();
                 }
                 else {
+                    $('#modal-reativar-editar').modal('hide');
                     $('#msgError #erroMsg').html(result.error);
+                    $('#msgError').show();
                 }
             },
             error: function (error) {
@@ -185,8 +200,9 @@
             url: '@Url.Action("ExcluirItem", "Aniversariantes")',
             success: function (result) {
                 if (result.is_action) {
+                    $('#modal-reativar').modal('hide');
                     $('#msgSucess #sucessMsg').html('Exclusão efetuada com sucesso!!!');
-                    $('#modal-reativar-editar').modal('hide');
+                    $('#msgSucess').show();
                     listar();
                 }
                 else {
@@ -195,7 +211,9 @@
             },
             error: function (error)
             {
+                $('#modal-reativar').modal('hide');
                 $('#msgError #erroMsg').html(result.error);
+                $('#msgError').show();
             },
             datatype: 'json'
         });

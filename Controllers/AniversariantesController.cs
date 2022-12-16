@@ -126,6 +126,41 @@ namespace app_cadastro.Controllers
             return Json(new { is_action, error });
         }
 
+
+        [HttpPost]
+        public IActionResult EditarEventoAniversario(string nome, string descricao, DateTime data, int Id)
+        {
+
+            string error = string.Empty;
+            bool is_action = false;
+
+            var query = _context.AniversariantesDoMes.Where(x => x.Id == Id).FirstOrDefault();
+
+            try
+            {
+                if (query != null)
+                {
+                    AniversariantesModel item = new AniversariantesModel();
+
+                        query.Nome = nome;
+                        query.Descricao = descricao;
+                        query.DataRealizacao = data;
+
+                    _context.SaveChanges();
+                }
+
+
+                is_action = true;
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+            }
+
+            return Json(new { is_action, error });
+        }
+
+
         [HttpPost]
         public virtual IActionResult AniversariantesDoMesPagination(string sEcho, int iDisplayStart, int iColumns, int iDisplayLength, string sSearch)
         {
@@ -145,7 +180,7 @@ namespace app_cadastro.Controllers
                 ide_aniversariantes = x.Id,
                 nome = x.Nome,
                 detalhes = $"<a href='#' type='button' class='btn btn-success' onclick='modalDetalhes({x.Id})'>Detalhes</a>",
-                editar = usuario.Perfil == Enums.PerfilEnum.AdminAniversariantes || usuario.Perfil == Enums.PerfilEnum.Dev ? $"<a href='#' type='button' class='btn btn-warning' onclick='modalExcluir({x.Id})'>Editar</a>" : "",
+                editar = usuario.Perfil == Enums.PerfilEnum.AdminAniversariantes || usuario.Perfil == Enums.PerfilEnum.Dev ? $"<a href='#' type='button' class='btn btn-warning' onclick='modalEditar({x.Id})'>Editar</a>" : "",
                 excluir = usuario.Perfil == Enums.PerfilEnum.AdminAniversariantes || usuario.Perfil == Enums.PerfilEnum.Dev ? $"<a href='#' type='button' class='btn btn-danger' onclick='modalExclusao({x.Id})'>Excluir</a>" : ""
             }).ToArray();
 
@@ -165,7 +200,7 @@ namespace app_cadastro.Controllers
         {
             var usuario = _sessao.BuscarSessaoDoUsuario();
 
-            IEnumerable<ItemAniversarioModel> query = _aniversariantesDoMesRepositorio.ListarTodosItens().Where(x => !x.StatusExc);
+            IEnumerable<ItemAniversarioModel> query = _aniversariantesDoMesRepositorio.ListarTodosItens();
 
             if (!string.IsNullOrEmpty(sSearch)) query = query.Where(x => x.Nome.ToLower()
                 .Contains(Utilities.RemoveSpecialCharacters(sSearch).ToLower())).AsQueryable();
@@ -200,12 +235,12 @@ namespace app_cadastro.Controllers
 
             IEnumerable<AniversariantesItemUsuarioModel> query = _aniversariantesDoMesRepositorio.ListarTodosVinculos(ide_aniversario).Where(x => !x.StatusExc);
 
-            if (!string.IsNullOrEmpty(sSearch)) query = query.Where(x => x.Id_Aniversariantes.ToString().ToLower()
+            if (!string.IsNullOrEmpty(sSearch)) query = query.Where(x => x.Nome_Usuario.ToString().ToLower()
                 .Contains(Utilities.RemoveSpecialCharacters(sSearch).ToLower())).AsQueryable();
 
             int recordsTotal = query.Count();
 
-            List<AniversariantesItemUsuarioModel> aList = query.OrderBy(x => x.Id_Usuario).Skip(iDisplayStart).ToList();
+            List<AniversariantesItemUsuarioModel> aList = query.OrderBy(x => x.Nome_Usuario).Skip(iDisplayStart).Take(iDisplayLength).ToList();
             //var queryUsuario = _contatoRepositorio.ListarPorId();
 
             var data = aList.Select(x => new
@@ -284,6 +319,8 @@ namespace app_cadastro.Controllers
             {
                 var usuario = _sessao.BuscarSessaoDoUsuario();
                 var queryItem = _aniversariantesDoMesRepositorio.ListarItemPorId(id_item);
+
+                if (queryItem.StatusExc == true) throw new Exception("Item já escolhido, recarregue a página e escolha outro item");
 
                 if (usuario != null)
                 {

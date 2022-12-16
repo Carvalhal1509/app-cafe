@@ -9,10 +9,10 @@ namespace app_cadastro.Repositorio
     public interface ICafeRepositorio
     {
 
-        CafeModel ListarPorId(int id);
-        List<CafeModel> BuscarTodos();
-        CafeModel Adicionar(CafeModel cafe);
-        CafeModel Atualizar(CafeModel cafe);
+        VaquinhaCafeModel ListarPorId(int id);
+        List<VaquinhaCafeModel> BuscarTodos();
+        VaquinhaCafeModel Adicionar(VaquinhaCafeModel cafe);
+        VaquinhaCafeModel Atualizar(VaquinhaCafeModel cafe);
         bool Apagar(int id);
 
     }

@@ -23,6 +23,9 @@ body, html {
 #container-button-close button {
     margin-right: 5px;
 }
+select {
+    border: none;
+}
 
 a {
     font-family: Poppins-Regular;
@@ -271,15 +274,20 @@ iframe {
     font-size: 35px;
     color: #fff;
     text-align: center;
-    margin-bottom: 20px;
     text-shadow: 3px 3px black;
 }
-
-
+.card-body {
+    padding: 50px;
+}
+.card-body span {
+    margin-bottom: 10px;
+}
+#titulo {
+    margin-bottom: 20px;
+}
 
 /*------------------------------------------------------------------
 [ Input ]*/
-
 @font-face {
     font-family: Comic Sans;
     src: url('http://fonts.cdnfonts.com/css/sans-comic-sans');
@@ -311,6 +319,7 @@ iframe {
     color: #e3e3e3;
     line-height: 1.2;
     padding: 0 2px;
+    font-size: 18px;
 }
 
 .focus-input100 {
@@ -339,10 +348,13 @@ iframe {
         background: -webkit-linear-gradient(45deg, #d5007d, #e53935);
         background: -o-linear-gradient(45deg, #d5007d, #e53935);
         background: -moz-linear-gradient(45deg, #d5007d, #e53935);
-        background: linear-gradient(45deg, #d5007d, #e53935);
+        background: #ffc107;
     }
 
-
+    select option {
+        background: black;
+        font-size: 18px;
+    }
 .input100:focus + .focus-input100::before {
     width: 100%;
 }
@@ -435,6 +447,7 @@ iframe {
     -moz-transition: all 0.4s;
     transition: all 0.4s;
 }
+    
 
 .login100-form-btn {
     display: -webkit-box;
@@ -449,9 +462,16 @@ iframe {
     height: 50px;
     font-family: Poppins-Medium;
     font-size: 16px;
-    color: #fff;
+    color: black;
     line-height: 1.2;
 }
+.dis-block {
+    color: white;
+}
+select {
+    background-color: none;
+}
+
 
 .wrap-login100-form-btn:hover .login100-form-bgbtn {
     bottom: 0;

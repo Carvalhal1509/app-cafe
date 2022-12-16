@@ -1,4 +1,6 @@
-﻿
+﻿body {
+    font-family: Arial, Helvetica, sans-serif;
+}
 #container-button-close {
     display: flex;
     justify-content: flex-end;
@@ -129,11 +131,20 @@ a.Provide sufficient contrast against white background
     background-repeat: no-repeat;
 }
 
+#titulo-login h2{
+    color: white;
+    margin-bottom: 25px;
+}
+
+h2 {
+    font-family:Arial;
+}
 .imagem-detran-login {
     width: 130px;
     justify-content: center;
     /*margin-top: 20px;*/
-    margin-block: -55px;
+    margin-block: -60px;
+    margin-bottom: 0px;
 }
 
 /*Imagem de registro*/
@@ -183,6 +194,14 @@ a.Provide sufficient contrast against white background
     padding: 0px 19px;
 }
 
+ 
+.row-registro {
+    display: flex;
+    -ms-flex-wrap: wrap;
+     flex-wrap: wrap; 
+   /* margin-right: -132px;
+    margin-left: -135px;*/
+}
 
 .card {
     position: relative;
@@ -200,6 +219,9 @@ a.Provide sufficient contrast against white background
     background: rgb(0 0 0/ 90%);
     box-shadow: 1px 2px 10px #000, 3px 6px 20px #000;
     text-align: center;
+}
+.card-body-login {
+
 }
 
 .card-home {
@@ -230,13 +252,13 @@ a.Provide sufficient contrast against white background
     justify-content: center;
     -ms-flex-direction: column;
     flex-direction: column;
-    min-width: 0;
     word-wrap: break-word;
     background-clip: border-box;
     border: 1px solid rgb(255 255 255 / 20%);
     border-radius: 31px;
-    background: rgb(0,0,0,0.257);
+    background: rgb(0 0 0/ 90%);
     box-shadow: 1px 2px 10px #000, 3px 6px 20px #000;
+    font-size: 10px !important;
 }
 
 .card-RedefinirSenha {
@@ -252,7 +274,8 @@ a.Provide sufficient contrast against white background
     background-clip: border-box;
     border: 1px solid rgb(255 255 255 / 20%);
     border-radius: 31px;
-    background: rgb(255 255 255 / 20%);
+    background: rgb(0 0 0/ 90%);
+    /*background: rgb(255 255 255 / 20%);*/
     box-shadow: 1px 2px 10px #000, 3px 6px 20px #000;
 }
 
@@ -268,7 +291,7 @@ a.Provide sufficient contrast against white background
 .label-login {
     color: rgba(255, 255, 255, 0.9);
     font-weight: 400;
-    font-size: 25px;
+    font-size: 18px;
     text-shadow: 1px 1px black;
     margin-top: 13px;
 }
@@ -321,6 +344,7 @@ a.Provide sufficient contrast against white background
     text-align: center;
 }
 
+
 .btn-warning {
    /* color: #ffffff;*/
     background-color: #e9cd05;
@@ -333,10 +357,10 @@ a.Provide sufficient contrast against white background
     width: 100%;
     height: 46px;
     background: white;
-    font-size: 25px;
     color: #c3c3c3;
     line-height: 1.2;
     padding: 0px 30px;
+    font-size:18px;
 }
 
     .input100::placeholder {
@@ -370,6 +394,25 @@ a.Provide sufficient contrast against white background
     display: flex !important;
     padding: 20px !important;
 }
+
+/*Modal  Editar da lista de eventos*/
+
+.modal-editar-evento {
+    border: 1px solid rgb(255 255 255 / 20%) ;
+    border-radius: 31px !important;
+    box-shadow: 1px 2px 10px #000, 3px 6px 20px #000 ;
+    display: flex ;
+    padding: 7px ;
+    position: relative;
+    flex-direction: column;
+    width: 530px;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    outline: 0;
+    width: 140% !important;
+}
+
 
 .button-senha-olho {
     position: relative;
@@ -683,23 +726,25 @@ a.Provide sufficient contrast against white background
     position: relative;
     /*background: #E4E9F7;
     height: 100vh;*/
-    left: 260px;
-    width: calc(100% - 260px);
+    /*left: 260px;
+    width: calc(100% - 260px);*/
+    left: 78px;
+    width: calc(100% - 78px);
     transition: all 0.5s ease;
 }
 
-.sidebar.close ~ .home-section {
+/*.sidebar.close ~ .home-section {
     left: 78px;
     width: calc(100% - 78px);
-}
+}*/
 
-.home-section .home-content {
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-}
+    .home-section .home-content {
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 10px 20px;
+    }
 
     .home-section .home-content .bx-menu,
     .home-section .home-content .text {
@@ -710,6 +755,13 @@ a.Provide sufficient contrast against white background
     .home-section .home-content .bx-menu {
         margin: 0 15px;
         cursor: pointer;
+        left: 210px;
+        position: absolute;
+        transition: all 0.5s ease;
+    }
+
+    .home-section .home-content .bx-menu.close {
+        left: 15px;
     }
 
     .home-section .home-content .text {
@@ -738,9 +790,9 @@ a.Provide sufficient contrast against white background
         width: 78px;
     }
 
-    .sidebar.close {
+        .sidebar.close {
             width: 0;
-    }
+        }
 
     .home-section {
         left: 78px;
@@ -752,4 +804,12 @@ a.Provide sufficient contrast against white background
         width: 100%;
         left: 0;
     }
+}
+
+.improviso{
+   width: 400px;
+}
+
+.DataAniversario{
+    width: 200px;
 }

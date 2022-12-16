@@ -14,7 +14,7 @@ namespace app_cadastro.Repositorio
 
         }
         
-      public CafeModel Adicionar(CafeModel cafe)
+      public VaquinhaCafeModel Adicionar(VaquinhaCafeModel cafe)
         {
             bancoContext1.Cafe.Add(cafe);
             bancoContext1.SaveChanges();
@@ -23,14 +23,16 @@ namespace app_cadastro.Repositorio
         
 
 
-        public CafeModel Atualizar(CafeModel cafee)
+        public VaquinhaCafeModel Atualizar(VaquinhaCafeModel cafee)
         {
             {
 
-                CafeModel cafeDb = ListarPorId(cafee.Id);
-                if (cafeDb == null) throw new System.Exception("Houve um erro na atualizacão do cafe do usuário!");
-                cafeDb.Cafe = cafee.Cafe;
-                cafeDb.DataCafe = cafee.DataCafe;
+                VaquinhaCafeModel cafeDb = ListarPorId(cafee.Id_Vaquinha_Cafe);
+                if (cafeDb == null) throw new System.Exception("Houve um erro na atualizacão da vaquinha!");
+                cafeDb.Nome = cafee.Nome;
+                cafeDb.Descricao = cafee.Descricao;
+                cafeDb.Chave_Pix = cafee.Chave_Pix;
+                cafeDb.Prazo_Pagamento = cafee.Prazo_Pagamento;
 
 
                 bancoContext1.Cafe.Update(cafeDb);
@@ -40,8 +42,8 @@ namespace app_cadastro.Repositorio
         }
         public bool Apagar(int id)
         {
-           CafeModel cafeDb = ListarPorId(id);
-            if (cafeDb == null) throw new System.Exception("Houve um erro na exclusão do cafe do usuário!");
+           VaquinhaCafeModel cafeDb = ListarPorId(id);
+            if (cafeDb == null) throw new System.Exception("Houve um erro na exclusão da vaquinha!");
             cafeDb.StatusExc = true;
 
 
@@ -51,12 +53,12 @@ namespace app_cadastro.Repositorio
             return true;
         }
 
-        public CafeModel ListarPorId(int id)
+        public VaquinhaCafeModel ListarPorId(int id)
         {
-            return bancoContext1.Cafe.FirstOrDefault(x => x.Id == id);
+            return bancoContext1.Cafe.FirstOrDefault(x => x.Id_Vaquinha_Cafe == id);
         }
 
-        public List<CafeModel> BuscarTodos()
+        public List<VaquinhaCafeModel> BuscarTodos()
         {
             return bancoContext1.Cafe.Where(x => !x.StatusExc).ToList();
         }

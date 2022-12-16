@@ -25,10 +25,10 @@
             <div class="container h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-                        <div class="card-registro">
-                            <div class="card-body p-5">
-                                <span class="login100-form-title">
-                                    Registro de novo Usuario
+                        <div class="card-registro col-xl-12">
+                            <div class="card-body col-xl-12 text-center">
+                                <span id="titulo" class="login100-form-title">
+                                    Registro
                                 </span>
                                 <div class="col-sm-12">
                                     <div id="errorModal" style="display: none">
@@ -49,66 +49,75 @@
                                     </div>
                                 </div>
 
-                                <div class="wrap-input100 validate-input" data-validate="Name is required">
-                                    <span class="label-input100">Nome completo*:</span>
-                                    <input class="input100" type="text" id="nome" name="nome" placeholder="Ex: João Pedro dos Santos">
-                                    <span class="focus-input100"></span>
-                                    @Html.ValidationMessageFor(x => x.Nome)
+                                <div class="col-xl-12">
+                                        <div class="wrap-input100 validate-input" data-validate="Name is required">
+                                            <input class="input100" type="text" id="nome" name="nome" placeholder="Nome">
+                                            <span class="focus-input100"></span>
+                                            @Html.ValidationMessageFor(x => x.Nome)
+                                        </div>
+                                        <div class="wrap-input100 validate-input" data-validate="Repeat Password is required">
+                                            <select asp-for="Setor" class="input100" id="setor" name="setor">
+                                                <option value="@SetorEnum.Atendimento">Atendimento</option>
+                                                <option value="@SetorEnum.EGP">EGP</option>
+                                                <option value="@SetorEnum.InfraEstrutura">Infraestrutura</option>
+                                                <option value="@SetorEnum.PlataformaAlta">Plataforma Alta</option>
+                                                <option value="@SetorEnum.PlataformaBaixa">Plataforma Baixa</option>
+                                                <option value="@SetorEnum.Requisitos">Requisitos</option>
+                                                <option value="@SetorEnum.Suporte">Suporte</option>
+                                            </select>
+                                            <span class="focus-input100"></span>
+                                            @Html.ValidationMessageFor(x => x.Setor)
+                                        </div>
                                 </div>
-                                <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-                                    <span class="label-input100">Email*:</span>
-                                    <input class="input100" type="email" required id="email" name="email" placeholder="Ex: joaopedro@teste.com.br">
-                                    <span class="focus-input100"></span>
-                                    @Html.ValidationMessageFor(x => x.Email)
-                                </div>
-                                <div class="wrap-input100 validate-input" data-validate="Username is required">
-                                    <span class="label-input100">Confirmar Email*:</span>
-                                    <input class="input100" type="email" required id="confirmarEmail" name="confirmarEmail" placeholder="Ex: joaopedro@teste.com.br">
-                                    <span class="focus-input100"></span>
-                                    @Html.ValidationMessageFor(x => x.Email)
-                                </div>
-                                <div class="wrap-input100 validate-input" data-validate="Senha">
-                                    <span class="label-input100">Senha*:</span>
-                                    <input class="input100" type="password" id="senha" name="senha" placeholder="*************">
-                                    <span class="focus-input100"></span>
-                                    @Html.ValidationMessageFor(x => x.Senha)
-                                </div>
-                                <div class="wrap-input100 validate-input" data-validate="Repeat Password is required">
-                                    <span class="label-input100">Confirmar Senha*:</span>
-                                    <input class="input100" type="password" id="confirmarSenha" name="confirmarSenha" placeholder="*************">
-                                    <span class="focus-input100"></span>
-                                    @Html.ValidationMessageFor(x => x.Senha)
-                                </div>
-                                <div class="wrap-input100 validate-input" data-validate="Repeat Password is required">
-                                    <span class="label-input100">Setor*:</span>
-                                    <select asp-for="Setor" class="input100" id="setor" name="setor">
-                                        <option value="@SetorEnum.Atendimento">Atendimento</option>
-                                        <option value="@SetorEnum.EGP">EGP</option>
-                                        <option value="@SetorEnum.InfraEstrutura">Infraestrutura</option>
-                                        <option value="@SetorEnum.PlataformaAlta">Plataforma Alta</option>
-                                        <option value="@SetorEnum.PlataformaBaixa">Plataforma Baixa</option>
-                                        <option value="@SetorEnum.Requisitos">Requisitos</option>
-                                        <option value="@SetorEnum.Suporte">Suporte</option>
-                                    </select>
-                                    <span class="focus-input100"></span>
-                                    @Html.ValidationMessageFor(x => x.Setor)
+
+                                <div class="row-registro col-xl-12"> 
+
+                                    <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                                        <input class="input100" type="email" required id="email" name="email" placeholder="Email:">
+                                        <span class="focus-input100"></span>
+                                        @Html.ValidationMessageFor(x => x.Email)
+                                    </div>
+
+                                    <div class="wrap-input100 validate-input" data-validate="Username is required">
+                                        <input class="input100" type="email" required id="confirmarEmail" name="confirmarEmail" placeholder="Confirmar Email:">
+                                        <span class="focus-input100"></span>
+                                        @Html.ValidationMessageFor(x => x.Email)
+                                    </div>
 
                                 </div>
-                                <div class="wrap-input100 validate-input" data-validate="Repeat Password is required">
-                                    <span class="label-input100">Data de Nascimento:</span>
-                                    <input class="input100" type="date" id="data" name="data" placeholder="DD/MM/AAAA">
-                                    <span class="focus-input100"></span>
+                                
+                                <div class="row-registro col-xl-12">
+                                    <div class="wrap-input100 validate-input" data-validate="Senha">
+                                        <input class="input100" type="password" id="senha" name="senha" placeholder="Senha:">
+                                        <span class="focus-input100"></span>
+                                        @Html.ValidationMessageFor(x => x.Senha)
+                                    </div>
+                                    <div class="wrap-input100 validate-input" data-validate="Repeat Password is required">
+                                        <input class="input100" type="password" id="confirmarSenha" name="confirmarSenha" placeholder="Confirmar Senha:">
+                                        <span class="focus-input100"></span>
+                                        @Html.ValidationMessageFor(x => x.Senha)
+                                    </div>
                                 </div>
-                                <div class="wrap-input100 validate-input" data-validate="Repeat Password is required">
-                                    <span class="label-input100">Telefone*:</span>
-                                    <input class="input100" type="text" id="telefone" name="telefone" maxlength="11" placeholder="Ex: 71988889999">
-                                    <span class="focus-input100"></span>
-                                    @Html.ValidationMessageFor(x => x.Celular)
+                               
+                                <div class="row-registro col-xl-12">
+
+                                    <div class="wrap-input100 validate-input" data-validate="Repeat Password is required">
+                                        <input class="input100" type="date" max="2999-12-31" id="data" name="data" placeholder="Data de nascimento:">
+                                        <span class="focus-input100"></span>
+                                    </div>
+                                    <br/>
+                                    <div class="wrap-input100 validate-input" data-validate="Repeat Password is required">
+                                        <input class="input100" type="text" id="telefone" name="telefone" maxlength="11" placeholder="Telefone:">
+                                        <span class="focus-input100"></span>
+                                        @Html.ValidationMessageFor(x => x.Celular)
+
+                                    </div>
 
                                 </div>
+                               
                                 <div class="container-login100-form-btn">
-                                    <div class="wrap-login100-form-btn">
-                                        <div class="login100-form-bgbtn"></div>
+                                    <div class="wrap-login100-form-btn ">
+                                        <div class="login100-form-bgbtn "></div>
                                         <button onclick="SalvarUsuario()" class="login100-form-btn">
                                             Registrar
                                         </button>
@@ -184,4 +193,5 @@
         $('#errorModal').hide();
         $('#sucessModal').hide();
     }
+
 </script>

@@ -39,7 +39,7 @@ namespace app_cadastro.Controllers
                 @ViewBag.Aniversario = usuario.Aniversario;
             }
 
-            CafeModel cafe = _cafeRepositorio.ListarPorId(id);
+            VaquinhaCafeModel cafe = _cafeRepositorio.ListarPorId(id);
             return View(cafe);
         }
 
@@ -60,7 +60,7 @@ namespace app_cadastro.Controllers
                     @ViewBag.Celular = usuario.Celular;
                     @ViewBag.Aniversario = usuario.Aniversario;
 
-                    List<CafeModel> cafe = _cafeRepositorio.BuscarTodos();
+                    List<VaquinhaCafeModel> cafe = _cafeRepositorio.BuscarTodos();
                     return View(cafe);
                 }
                 else
@@ -100,19 +100,18 @@ namespace app_cadastro.Controllers
                 @ViewBag.Aniversario = usuario.Aniversario;
             }
 
-           CafeModel cafe = _cafeRepositorio.ListarPorId(id);
+           VaquinhaCafeModel cafe = _cafeRepositorio.ListarPorId(id);
             return View(cafe);
         }
         [HttpPost]
-        public IActionResult Alterar(CafeModel cafee)
+        public IActionResult Alterar(VaquinhaCafeModel cafee)
         {
-            var query = _context.Cafe.Where(x => x.Id == cafee.Id).FirstOrDefault();
+            var query = _context.Cafe.Where(x => x.Id_Vaquinha_Cafe == cafee.Id_Vaquinha_Cafe).FirstOrDefault();
 
             try
             {
-                if (query != null && cafee.Cafe != null)
+                if (query != null && cafee.Nome != null)
                 {
-                    cafee.Organizador = query.Organizador;
                     _cafeRepositorio.Atualizar(cafee);
                     TempData["MensagemSucesso"] = "Vaquinha do Café atualizado com sucesso!";
                     return RedirectToAction("Index", "Cafe");
@@ -148,14 +147,13 @@ namespace app_cadastro.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult CafeCriar(CafeModel cafee)
+        public IActionResult CafeCriar(VaquinhaCafeModel cafee)
         {
             try
             {
                 var usuario = _sessao.BuscarSessaoDoUsuario();
-                cafee.Organizador = usuario.Nome;
 
-                if (cafee.Cafe != null)
+                if (cafee.Nome != null || cafee.Descricao != null || cafee.Chave_Pix != null || cafee.Prazo_Pagamento != null)
                 {
 
                     cafee = _cafeRepositorio.Adicionar(cafee);
@@ -165,7 +163,7 @@ namespace app_cadastro.Controllers
                 }
                 else
                 {
-                    TempData["MensagemErro"] = $"Ops, nome da vaquinha é obrigatório, preencha e tente novamente.";
+                    TempData["MensagemErro"] = $"Ops, campos com * são obrigatórios, preencha e tente novamente.";
                     return RedirectToAction("CafeCriar", "Cafe");
                 }
                 

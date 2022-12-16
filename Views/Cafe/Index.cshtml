@@ -1,5 +1,5 @@
 ﻿
-@model List<CafeModel>
+@model List<VaquinhaCafeModel>
 @{
     ViewData["Title"] = "Lista de Café";
 }
@@ -48,14 +48,12 @@
         <thead>
             <tr>
                 <th scope="col" style="display:none">Id</th>
-                <th scope="col">Organizador</th>
-                <th scope="col">Setor</th>
-                <th scope="col">Data do Cafe</th>
+                <th scope="col">Nome</th>
                 <th scope="col">Detalhes</th>
                 @if (@ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.Dev || @ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.AdminCafe)
                 {
-                    <th scope="col">Editar</th>
-                    <th scope="col">Excluir</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
                 }
 
             </tr>
@@ -63,30 +61,27 @@
         <tbody>
             @if (Model != null && Model.Any())
             {
-                foreach (CafeModel cafe in Model)
+                foreach (VaquinhaCafeModel cafe in Model)
                 {
                     <tr>
-                        <th scope="row" style="display:none">@cafe.Id</th>
-                        <td>@cafe.Organizador</td>
-                        <td>@cafe.Cafe</td>
-                        <td>@cafe.DataCafe.ToString("dd/MM/yyyy")</td>
-
+                        <th scope="row" style="display:none">@cafe.Id_Vaquinha_Cafe</th>
+                        <td>@cafe.Nome</td>
 
                         <td>
                             <div role="group">
-                                <a role="button" class="btn btn-success" onclick="modalDetalhes(@cafe.Id)">Detalhes</a>
+                                <a role="button" class="btn btn-success" onclick="modalDetalhes(@cafe.Id_Vaquinha_Cafe)">Detalhes</a>
                             </div>
                         </td>
                         @if (@ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.Dev || @ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.AdminCafe)
                         {
                             <td>
                                 <div role="group">
-                                    <a role="button" class="btn btn-light" asp-route-id="@cafe.Id" asp-controller="Cafe" asp-action="CafeEditar">Editar</a>
+                                    <a role="button" class="btn btn-light" asp-route-id="@cafe.Id_Vaquinha_Cafe" asp-controller="Cafe" asp-action="CafeEditar">Editar</a>
                                 </div>
                             </td>
                             <td>
                                 <div role="group">
-                                    <a role="button" class="btn btn-danger" onclick="modalApagar(@cafe.Id)">Apagar</a>
+                                    <a role="button" class="btn btn-danger" onclick="modalApagar(@cafe.Id_Vaquinha_Cafe)">Apagar</a>
                                 </div>
                             </td>
                         }
@@ -135,8 +130,16 @@
                         <span id="txtCafe"></span>
                     </div>
                     <div>
-                        <label for="txtDataRealizacao">Data Realização: </label>
-                        <span id="txtDataRealizacao"></span>
+                        <label for="txtChavePix">Chave Pix: </label>
+                        <span id="txtChavePix"></span>
+                    </div>
+                    <div>
+                        <label for="txtDescricao">Descrição: </label>
+                        <span id="txtDescricao"></span>
+                    </div>
+                    <div>
+                        <label for="txtPrazoPagamento">Prazo de Pagamento: </label>
+                        <span id="txtPrazoPagamento"></span>
                     </div>
 
                     <hr />
@@ -260,9 +263,11 @@
             url: '@Url.Action("BuscarDadosCafe", "Arquivos")',
             success: function (result) {
                 if (result.is_action) {
-                    $('#txtCafe').html(result.dados.cafe);
-                    $('#txtDataRealizacao').html(result.dados.dataCafe);
-                    $('#txtId').html(result.dados.id);
+                    $('#txtCafe').html(result.dados.nome);
+                    $('#txtPrazoPagamento').html(result.dados.prazo_Pagamento);
+                    $('#txtId').html(result.dados.id_Vaquinha_Cafe);
+                    $('#txtDescricao').html(result.dados.descricao);
+                    $('#txtChavePix').html(result.dados.chave_Pix);
                     listarParticipantes(id_cafe);
                 }
                 else {
@@ -282,7 +287,7 @@
         `<form action="/Arquivos/UploadImagem?id_cafe=${id_cafe}" enctype="multipart/form-data" for="formFile" class="form-label row" method="post">` +
             `<label for="formFile" class="dis-block txt3 hov1 p-r-30 p-l-30">Anexar comprovante de pagamento: </label>` +
             `<input type="file" name="arquivos" id="formFile" multiple class="col-sm-9" />` +
-            `<button class="btn btn-warning ms-2 col-sm-3" style="width:20%">Salvar</button>` +
+            `<button class="btn btn-warning ms-2 col-sm-3" style="width:20%">Participar</button>` +
          `</form>`;
     }
 
