@@ -33,10 +33,10 @@ namespace app_cadastro.Controllers
 
             try
             {
-                if (!Usuario.Email.EndsWith("@detran.ba.gov.br"))
-                {
-                    return BadRequest(new Response<string>("", "Email não pertence ao Detran, por favor, cadastre-se com email @detran.ba.gov.br", false));
-                }
+                //if (!Usuario.Email.EndsWith("@detran.ba.gov.br"))
+                //{
+                //    return BadRequest(new Response<string>("", "Email não pertence ao Detran, por favor, cadastre-se com email @detran.ba.gov.br", false));
+                //}
 
                 if (Usuario.Nome == null || Usuario.Email == null || Usuario.Senha == null || Usuario.Celular == null || informacaoEmail2 == null || informacaoSenha2 == null)
                 {
@@ -57,10 +57,10 @@ namespace app_cadastro.Controllers
 
                 var query = _context.Usuarios.Where(x => x.Email == Usuario.Email).FirstOrDefault();
 
-                if (query != null)
-                {
-                    return BadRequest(new Response<string>("", "Email já cadastrado!", false));
-                }
+                //if (query != null)
+                //{
+                //    return BadRequest(new Response<string>("", "Email já cadastrado!", false));
+                //}
 
                 Usuario.Perfil = Enums.PerfilEnum.Padrao;              
                 _context.Usuarios.Add(Usuario);

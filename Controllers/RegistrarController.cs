@@ -126,10 +126,10 @@ namespace app_cadastro.Controllers
                 {
                     TempData["MensagemErro"] = "Campos com (*) são obrigatórios, preencha e tente novamente.";
                 }
-                else if (!contato.Email.EndsWith("@detran.ba.gov.br"))
-                {
-                    TempData["MensagemErro"] = "Email não pertence ao Detran, por favor, cadastre-se com email @detran.ba.gov.br";
-                }
+                //else if (!contato.Email.EndsWith("@detran.ba.gov.br"))
+                //{
+                //    TempData["MensagemErro"] = "Email não pertence ao Detran, por favor, cadastre-se com email @detran.ba.gov.br";
+                //}
                 else
                 {
                     string novaSenha = Guid.NewGuid().ToString().Substring(0, 8);

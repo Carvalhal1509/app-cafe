@@ -24,7 +24,7 @@ namespace app_cadastro.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Digite o Celular")]
-        public decimal? Celular { get; set; }
+        public int Celular { get; set; }
 
         public DateTime Aniversario { get; set; }
 

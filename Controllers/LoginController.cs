@@ -48,11 +48,12 @@ namespace app_cadastro.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    if (!loginModel.Email.EndsWith("@detran.ba.gov.br"))
-                    {
-                        TempData["MensagemErro"] = "Email não pertence ao DETRAN, por favor, entre com seu email pessoal do DETRAN";
-                    }
-                    else if (contato.StatusExc == false)
+                    //if (!loginModel.Email.EndsWith("@detran.ba.gov.br"))
+                    //{
+                    //    TempData["MensagemErro"] = "Email não pertence ao DETRAN, por favor, entre com seu email pessoal do DETRAN";
+                    //}
+                    //else
+                    if (contato.StatusExc == false)
                     {
                         loginModel.Senha = Hash.SHA512(loginModel.Senha);
 
