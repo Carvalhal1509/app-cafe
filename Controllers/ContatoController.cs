@@ -97,12 +97,13 @@ namespace app_cadastro.Controllers
 
             try
             {
-                if (!contato.Email.EndsWith("@detran.ba.gov.br"))
-                {
-                    TempData["MensagemErro"] = "Email não pertence ao Detran, por favor, cadastre-se com email @detran.ba.gov.br";
-                    return RedirectToAction("PaginaAdm", "Registrar");
-                }
-                else if (query != null && contato.Email == query.Email)
+                //if (!contato.Email.EndsWith("@detran.ba.gov.br"))
+                //{
+                //    TempData["MensagemErro"] = "Email não pertence ao Detran, por favor, cadastre-se com email @detran.ba.gov.br";
+                //    return RedirectToAction("PaginaAdm", "Registrar");
+                //}
+                //else 
+                if (query != null && contato.Email == query.Email)
                 {
                     contato.Senha = query.Senha;
                     _contatoRepositorio.Atualizar(contato);
