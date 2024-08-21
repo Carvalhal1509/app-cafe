@@ -24,7 +24,6 @@ namespace app_cadastro.Controllers
         public IActionResult Index()
         {
             var usuario = _sessao.BuscarSessaoDoUsuario();
-            var query = _context.Cafe.Where(x => !x.StatusExc).ToList();
             var arquivos = _context.Arquivos.ToList();
 
             if (usuario != null)
@@ -33,8 +32,6 @@ namespace app_cadastro.Controllers
                 @ViewBag.Perfil = usuario.Perfil;
                 @ViewBag.Email = usuario.Email;
                 @ViewBag.Celular = usuario.Celular;
-                @ViewBag.Aniversario = usuario.Aniversario;
-                @ViewBag.ListaCafe = query;
 
             }
           
@@ -126,29 +123,6 @@ namespace app_cadastro.Controllers
             return File(arquivosBanco.Dados, arquivosBanco.ContentType,arquivosBanco.Descricao);
         }
 
-        public IActionResult BuscarDadosCafe(int id_cafe)
-        {
-
-            string error = string.Empty;
-            bool is_action = false;
-
-            var dados = _context.Cafe.Where(x => x.Id_Vaquinha_Cafe == id_cafe).FirstOrDefault();
-
-            try
-            {
-                if (dados != null)
-                {
-                    is_action = true;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                error = ex.Message;
-            }
-
-            return Json(new { is_action, error, dados });
-        }
 
         [HttpPost]
         public IActionResult AprovarPix(int id_comprovante)

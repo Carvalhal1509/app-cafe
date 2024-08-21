@@ -124,12 +124,21 @@ a.Provide sufficient contrast against white background
     padding-right: 0px;
 }
 
+.background-tecnology {
+    background-image: url('https://image.cdn2.seaart.ai/2024-06-12/cpker3de878c73fhvk7g/fc289a9d071ccc53c925023bb6ecca167895900f_high.webp') background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+
+
+
 /*Imagem de login*/
-.background-image {
-    background-image: url('/Image/Bakcground-Cafe.png');
+/*.background-image {
+    background-image: url('/Image/tokyo.png');
     background-size: cover;
     background-repeat: no-repeat;
-}
+}*/
 
 #titulo-login h2{
     color: white;
@@ -139,18 +148,18 @@ a.Provide sufficient contrast against white background
 h2 {
     font-family:Arial;
 }
-.imagem-detran-login {
+/*.imagem-detran-login {
     width: 130px;
-    justify-content: center;
+    justify-content: center;*/
     /*margin-top: 20px;*/
-    margin-block: -60px;
+    /*margin-block: -60px;
     margin-bottom: 0px;
-}
+}*/
 
 /*Imagem de registro*/
 .background-image-registrar {
     /*background-image: url('/image/wepik-photo-mode-2022927-83958.png');*/
-    background-image: url('/image/wepik-photo-mode-2022928-82540.png');
+    background-image: url('/image/tokyo.png');
     /*background-image: url('/image/wepik-photo-mode-2022928-9589.png');*/
     background-size: cover;
     background-repeat: no-repeat;
@@ -158,26 +167,26 @@ h2 {
 
 /*Imagem de Redefinir senha*/
 .background-image-RedefinirSenha {
-    background-image: url('/Image/coffee-beans-close-up.jpg');
+    background-image: url('/Image/tokyo.png');
     background-size: cover;
     background-repeat: no-repeat;
 }
 
 
-
+/*
 .background-image-home {
-    /*background-image: url('/Image/Bakcground-Cafe.png');*/
-    /*background-size: cover;
-    background-repeat: no-repeat;*/
+    background-image: url('/Image/tokyo.png');
+    background-size: cover;
+    background-repeat: no-repeat;
     width: 100%;
-    /*background-size: cover;*/
+    background-size: cover;
 }
-
+*/
 
 /*Imagens do carrosel Home*/
 
 .Imagem-carrosel {
-    background-image: url('/Image/Bakcground-Cafe.png');
+    background-image: url('/Image/tokyo.png');
     background-size: cover;
     background-repeat: no-repeat;
 }
