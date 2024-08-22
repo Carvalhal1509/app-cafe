@@ -15,7 +15,9 @@
 </head>
 <body>
     <div class="sidebar close">
-  
+        <div class="logo-details">
+            <i class="material-symbols-outlined">celebration</i><span class="logo_name">Café & Eventos</span>
+        </div>
         <ul class="nav-links">
 
 
@@ -53,27 +55,44 @@
             <li>
                 <div class="iocn-link">
                     <a href="#">
-                        
+                        <i class="material-symbols-outlined">coffee</i><span class="link_name">Vaquinha do Café</span>
                     </a>
                     <i class='bx bxs-chevron-down arrow'></i>
                 </div>
-               
+                <ul class="sub-menu">
+                    @if (@ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.Dev || @ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.AdminCafe)
+                    {
+                        <li><a asp-controller="Arquivos" asp-action="Index">Comprovante Pix</a></li>
+                    }
+                    <li><a asp-controller="Cafe" asp-action="Index">Vaquinha do Café</a></li>
+                </ul>
             </li>
             <li>
                 <div class="iocn-link">
-                    
+                    <a href="#">
+                        <i class="material-symbols-outlined">edit_calendar</i><span class="link_name">Eventos</span>
+                    </a>
                     <i class='bx bxs-chevron-down arrow'></i>
                 </div>
-               
+                <ul class="sub-menu">
+                    <li><a asp-controller="Eventos" asp-action="Index">Eventos Ativos</a></li>
+                    <li><a asp-controller="Eventos" asp-action="MeusEventos">Meus Eventos</a></li>
+                </ul>
             </li>
 
             <li>
                 <div class="iocn-link">
-                    
+                    <a href="#">
+                        <i class="material-symbols-outlined">cake</i><span class="link_name">Aniversariantes</span>
+                    </a>
                     <i class='bx bxs-chevron-down arrow'></i>
                 </div>
                 <ul class="sub-menu">
-                    
+                    <li><a asp-controller="Aniversariantes" asp-action="Index">Aniversariantes do Mês</a></li>
+                    @if (@ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.Dev || @ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.AdminAniversariantes)
+                    {
+                        <li><a asp-controller="Aniversariantes" asp-action="ItemAniversariantes">Lista de Itens</a></li>
+                    }
                 </ul>
             </li>
         </ul>
@@ -128,7 +147,7 @@
 
                     <div class="modal-body">
                         <div>
-                           
+                            Digite sua sugestão para o Detran - Web Café:
                         </div>
                         <div class="mt-2">
                             <textarea type="text" id="descricao-sugestao" name="descricao-sugestao" class="form-control"> </textarea>

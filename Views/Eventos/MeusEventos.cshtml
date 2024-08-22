@@ -1,0 +1,268 @@
+﻿@model List<EventoModel>
+@{
+    ViewData["Title"] = "Lista de Itens";
+}
+
+
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-start">
+    <a class="btn btn-warning ms-2 ml-2 mt-2" role="button" asp-controller="Eventos" asp-action="CriarEvento">Adicionar Eventos</a>
+    <a class="btn btn-light ml-2 mt-2" role="button" asp-controller="Home" asp-action="Index">Voltar</a>
+</div>
+<br />
+
+<div class="container">
+    @if (TempData["MensagemSucesso"] != null)
+    {<div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="btn btn-danger btn-close btn-sm close-alert" data-bs-dismiss="alert" arial-label="Close"></button>
+            @TempData["MensagemSucesso"]
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {<div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="btn btn-danger btn-close btn-sm close-alert" data-bs-dismiss="alert" arial-label="Close"></button>
+            @TempData["MensagemErro"]
+        </div>
+    }
+</div>
+
+<div class="text-center">
+    <img style="" src="~/Image/calendario.gif" width="150px" class="" alt="">
+</div>
+
+<div class="text-center container">
+    <h2>Meus Eventos</h2>
+    <br />
+
+    <table class="table table-bordered table-striped container" id="table-eventos">
+        <thead>
+            <tr>
+                <th scope="col" style="display:none">Id</th>
+                <th scope="col">Nome do Evento</th>
+                <th scope="col">Adicionar Item</th>
+                <th scope="col">Editar</th>
+                <th scope="col">Excluir</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (EventoModel evento in Model)
+                {
+                    <tr>
+                        <th scope="row" style="display:none">@evento.Id</th>
+                        <td>@evento.NomeEvento </td>
+                        <td>
+                            <div role="group">
+                                <a role="button" class="btn btn-success" onclick="modalDetalhes(@evento.Id)">Adicionar Item</a>
+                            </div>
+                        </td>
+                        <td>
+                            <div role="group">
+                                <a role="button" class="btn btn-light" asp-route-id="@evento.Id" asp-controller="Eventos" asp-action="EventoEditar">Editar</a>
+                            </div>
+                        </td>
+                        <td>
+                            <div role="group">
+                                <a role="button" class="btn btn-danger" onclick="modalApagar(@evento.Id)">Apagar</a>
+                            </div>
+                        </td>
+
+                    </tr>
+                }
+            }
+
+
+        </tbody>
+    </table>
+</div>
+
+
+<div id="modalDetalhes">
+    <div class="modal fade" id="modal-detalhes" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h4 class="modal-title">Itens</h4>
+
+                    <br />
+                </div>
+
+                <div id="list_header">
+                    <div id="msgError" class="alert alert-danger alert-dismissable" style="display: none;">
+                        <i class="fa fa-ban"></i>
+                        <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+                        <span id="erroMsg"></span>
+                    </div>
+                </div>
+                <div id="list_header">
+                    <div id="msgSucesso" class="alert alert-success alert-dismissable" style="display: none;">
+                        <i class="fa fa-ban"></i>
+                        <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+                        <span id="sucessoMsg"></span>
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <div style="display: none">
+                        <label for="txtId">Id: </label>
+                        <span id="txtId"></span>
+                    </div>
+                    <div>
+                        <label for="txtNome">Nome: </label>
+                        <span id="txtNome"></span>
+                    </div>
+                    <div>
+                        <label for="txtOrganizador">Organizador: </label>
+                        <span id="txtOrganizador"></span>
+                    </div>
+                    <div>
+                        <label for="txtDescricao">Descrição: </label>
+                        <span id="txtDescricao"></span>
+                    </div>
+                    <div>
+                        <label for="txtDataRealizacao">Data Realização: </label>
+                        <span id="txtDataRealizacao"></span>
+                    </div>
+
+                    <hr />
+
+                    <div class="form-group col-sm-8 ">
+                        <label for="Nome" style="display: none">Nome</label>
+                        <input type="text" id="Nome" name="Nome" class="form-control" placeholder="Ex: Pix R$30,00">
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-success" id="btn-adicionar-item" onclick="adicionarItem();">Adicionar</button>
+                    </div>
+                </div>
+
+                <hr />
+
+
+                <div class="modal-body" style="padding-bottom: 0px; text-align: center; font-size: 18px;">
+                    <div class="row container">
+                        <div class="box">
+                            <div class="box-header">
+
+                            </div><!-- /.box-header -->
+                            <div class="box-body">
+
+                            </div><!-- /.box-body -->
+                        </div><!-- /.box -->
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+<div id="modalapagar">
+    <div class="modal fade" id="modal-apagar" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirmar Exclusão</h4>
+                </div>
+                <div class="modal-body" style="padding-bottom: 0px; text-align: center; font-size: 18px;">
+                    <div class="row">
+                        Tem certeza que deseja apagar esse evento?
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a id="bottonExcluir" role="button" class="btn btn-danger">Excluir</a>
+                    <button type="button" class="btn btn-light" title="fecharApagar" id="fecharApagar" onclick="modalFecharApagar()">Não</button>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //$('#btn-confirmar-exclusao').on('click', exclusao);
+        //listar();
+    });
+
+    function modalDetalhes(id_evento) {
+        BuscarDadosEvento(id_evento);
+        $('#btn-adicionar-item').attr('id-target', id_evento);
+        $('#modal-detalhes').modal('show');
+    }
+
+    function BuscarDadosEvento(id_evento) {
+        $.ajax({
+            type: 'POST',
+            data: {
+                'id_evento': id_evento,
+            },
+            url: '@Url.Action("BuscarDadosEvento", "Eventos")',
+            success: function (result) {
+                if (result.is_action) {
+                    $('#txtId').html(result.dados.id);
+                    $('#txtNome').html(result.dados.nomeEvento);
+                    $('#txtOrganizador').html(result.dados.organizador);
+                    $('#txtDescricao').html(result.dados.descricao);
+                    $('#txtDataRealizacao').html(result.dados.dataEvento);
+                }
+                else {
+                    $('#msgError #erroMsg').html(result.error);
+                }
+            },
+            error: function (error)
+            {
+                $('#msgError #erroMsg').html(result.error);
+            },
+            datatype: 'json'
+        });
+    }
+
+   function adicionarItem() {
+        let id_evento = $('#btn-adicionar-item').attr('id-target');
+       let nome = $('#Nome').val();
+
+        $.ajax({
+            type: 'POST',
+            data: {
+                'id_evento': id_evento,
+                'nome': nome
+            },
+            url: '@Url.Action("AdicionarItem", "Eventos")',
+            success: function (result) {
+                if (result.is_action) {
+                    BuscarDadosEvento(result.id_evento);
+                    $('#Nome').val('');
+                    $('#sucessoMsg').html('Item cadastrado com sucesso');
+                    $('#msgSucesso').show();
+                }
+                else {
+                    $('#msgError #erroMsg').html(result.error);
+                }
+            },
+            error: function (error)
+            {
+                $('#msgError #erroMsg').html(result.error);
+            },
+            datatype: 'json'
+        });
+   }
+
+    function modalApagar(Id) {
+        $('#bottonExcluir').attr('href', `@Url.Action("Apagar","Eventos")?id=${Id}`);
+        $('#modal-apagar').modal('show');
+    }
+
+    function modalFecharApagar() {
+        $('#modal-apagar').modal('hide');
+    }
+
+</script>

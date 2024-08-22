@@ -32,6 +32,10 @@ namespace app_cadastro
             services.AddControllersWithViews();
 
             services.AddScoped<IContatoRepositorio, ContatoRepositorio>();
+            services.AddScoped<IEventoRepositorio, EventoRepositorio>();
+            services.AddScoped<ICafeRepositorio, CafeRepositorio>();
+            services.AddScoped<IAniversariantesRepositorio, AniversariantesRepositorio>();
+            services.AddScoped<IAniversariantesDoMesRepositorio, AniversariantesDoMesRepositorio>();
             services.AddScoped<ISugestaoRepositoriocs, SugestaoRepositoriocs> ();
             services.AddScoped<ISessao, Sessao>();
             services.AddScoped<IEmail, Email>();

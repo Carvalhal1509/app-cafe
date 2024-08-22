@@ -40,7 +40,7 @@ namespace app_cadastro.Controllers
                 throw new Exception("Usuário ainda não está logado, efetue o login.");
                 _ = RedirectToAction("Index", "Login");
             }
-            //List<Usuarios> contato = _c,ontatoRepositorio.BuscarTodos();
+            //List<Usuarios> contato = _contatoRepositorio.BuscarTodos();
         }
 
         

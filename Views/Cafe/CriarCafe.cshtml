@@ -1,0 +1,37 @@
+﻿@model CafeModel
+@{
+    Layout = "_Layout Deslogada";
+    ViewData["Title"] = "Criar cafe";
+
+}
+<div class="text-center mt-3">
+    <h3>Criar evento</h3>
+
+</div>
+<div id="overlay" class="overlay container">
+    <form asp-controller="Cafe" asp-action="CriarCafe" method="post">
+        <div class="form-group">
+            <label>Organizador</label>
+            <input type="text" asp-for="Organizador" class="form-control">
+
+        </div>
+
+        <div class="form-group">
+            <label>Nome do cafe</label>
+            <input type="text" asp-for="Cafe" class="form-control">
+
+        </div>
+
+        <div class="wrap-input100 validate-input">
+            <span class="label-input100"> Data do cafe</span>
+            <input type="date" asp-for="DataCafe" class="input100" placeholder="DD/MM/AAAA">
+            <span class="focus-input100"></span>
+        </div>
+
+        <br />
+
+        <a class="btn btn-light btn-lg" role="button" asp-controller="Cafe" asp-action="Index">Voltar</a>
+        <button type="submit" class="btn btn-warning btn-lg ms-2">Continuar</button>
+    </form>
+    </div>
+

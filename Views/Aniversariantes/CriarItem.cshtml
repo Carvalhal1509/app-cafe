@@ -1,0 +1,23 @@
+﻿@model ItemAniversarioModel
+@{
+    ViewData["Title"] = "Criar Item";
+}
+
+<div class="text-center mt-3">
+    <h3>Criar Item</h3>
+
+</div>
+<div id="overlay" class="overlay container">
+    <form asp-controller="Aniversariantes" asp-action="CriarItem" method="post">
+        <div class="form-group col-sm-12">
+            <label>Item*:</label>
+            <input type="text" asp-for="Nome" class="form-control" placeholder="Ex: Bolo de Chocolate">
+        </div>
+
+        <br />
+
+        <button type="submit" class="btn btn-warning ms-2">Salvar</button>
+        <a class="btn btn-light" role="button" asp-controller="Aniversariantes" asp-action="ItemAniversariantes">Voltar</a>
+
+    </form>
+</div>

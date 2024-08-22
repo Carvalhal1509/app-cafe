@@ -11,9 +11,14 @@ namespace app_cadastro.Data
 		}
 
 		public DbSet<Usuarios> Usuarios { get; set; }
-		
+		public DbSet<EventoModel> Eventos { get; set; }
+		public DbSet<VaquinhaCafeModel> Cafe { get; set; }
+		public DbSet<AniversariantesModel> AniversariantesDoMes { get; set; }
 		public DbSet<Arquivos> Arquivos { get; set; }
-		
+		public DbSet<ItemAniversarioModel> ItemAniversario { get; set; }
+		public DbSet<AniversariantesItemUsuarioModel> AniversariantesItemUsuario { get; set; }
+		public DbSet<ItemEventoModel> ItemEvento { get; set; }
+		public DbSet<EventoItemUsuarioModel> EventoItemUsuario { get; set; }
 		public DbSet<SugestaoModel> Sugestao { get; set; }
 
 

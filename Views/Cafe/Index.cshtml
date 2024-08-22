@@ -1,0 +1,308 @@
+﻿
+@model List<VaquinhaCafeModel>
+@{
+    ViewData["Title"] = "Lista de Café";
+}
+
+
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-start">
+    @if (@ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.Dev || @ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.AdminCafe)
+    {
+        <a class="btn btn-warning ms-2 ml-2 mt-2" role="button" asp-controller="Cafe" asp-action="CafeCriar">Adicionar Vaquinha</a>
+    }
+    <a class="btn btn-light ml-2 mt-2" role="button" asp-controller="Home" asp-action="Index">Voltar</a>
+    </div>
+<br />
+
+
+
+<div class="container">
+    @if (TempData["MensagemSucesso"] != null)
+    {<div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="btn btn-danger btn-close btn-sm close-alert" data-bs-dismiss="alert" arial-label="Close"></button>
+            @TempData["MensagemSucesso"]
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {<div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="btn btn-danger btn-close btn-sm close-alert" data-bs-dismiss="alert" arial-label="Close"></button>
+            @TempData["MensagemErro"]
+        </div>
+    }
+</div>
+
+
+<div class="text-center container">
+
+    <div class="text-center">
+        <img style="" src="~/Image/xicara-de-cafe.gif" width="150px" class="" alt="">
+    </div>
+    <br />
+
+    <h1 class="">Lista de Vaquinhas Ativas</h1>
+    <br />
+
+    <table class="ttable table-bordered table-striped" id="table-cafe">
+        <thead>
+            <tr>
+                <th scope="col" style="display:none">Id</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Detalhes</th>
+                @if (@ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.Dev || @ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.AdminCafe)
+                {
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                }
+
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (VaquinhaCafeModel cafe in Model)
+                {
+                    <tr>
+                        <th scope="row" style="display:none">@cafe.Id_Vaquinha_Cafe</th>
+                        <td>@cafe.Nome</td>
+
+                        <td>
+                            <div role="group">
+                                <a role="button" class="btn btn-success" onclick="modalDetalhes(@cafe.Id_Vaquinha_Cafe)">Detalhes</a>
+                            </div>
+                        </td>
+                        @if (@ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.Dev || @ViewBag.Perfil == app_cadastro.Enums.PerfilEnum.AdminCafe)
+                        {
+                            <td>
+                                <div role="group">
+                                    <a role="button" class="btn btn-light" asp-route-id="@cafe.Id_Vaquinha_Cafe" asp-controller="Cafe" asp-action="CafeEditar">Editar</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div role="group">
+                                    <a role="button" class="btn btn-danger" onclick="modalApagar(@cafe.Id_Vaquinha_Cafe)">Apagar</a>
+                                </div>
+                            </td>
+                        }
+
+                    </tr>
+                }
+            }
+
+
+        </tbody>
+    </table>
+</div>
+
+<div id="modalDetalhes">
+    <div class="modal fade" id="modal-detalhes" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Detalhes</h4>
+                    <br />
+                </div>
+
+                <div id="list_header">
+                    <div id="msgError" class="alert alert-danger alert-dismissable" style="display: none;">
+                        <i class="fa fa-ban"></i>
+                        <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+                        <span id="erroMsg"></span>
+                    </div>
+                </div>
+
+                <div id="list_header">
+                    <div id="msgSucesso" class="alert alert-success alert-dismissable" style="display: none;">
+                        <i class="fa fa-ban"></i>
+                        <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+                        <span id="sucessoMsg"></span>
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <div style="display: none">
+                        <label for="txtId">Id: </label>
+                        <span id="txtId"></span>
+                    </div>
+                    <div>
+                        <label for="txtCafe">Nome: </label>
+                        <span id="txtCafe"></span>
+                    </div>
+                    <div>
+                        <label for="txtChavePix">Chave Pix: </label>
+                        <span id="txtChavePix"></span>
+                    </div>
+                    <div>
+                        <label for="txtDescricao">Descrição: </label>
+                        <span id="txtDescricao"></span>
+                    </div>
+                    <div>
+                        <label for="txtPrazoPagamento">Prazo de Pagamento: </label>
+                        <span id="txtPrazoPagamento"></span>
+                    </div>
+
+                    <hr />
+
+                    <div id="exibirForm">
+
+                    </div>
+
+                </div>
+
+                <hr />
+
+                <div class="modal-body" style="padding-bottom: 0px; text-align: center; font-size: 18px;">
+                    <div class="row container">
+                        <div class="box">
+                            <div class="box-header">
+
+                            </div><!-- /.box-header -->
+                            <div class="box-body">
+
+                            <table id="list_items_participantes" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Participante</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Participante</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            </div><!-- /.box-body -->
+                        </div><!-- /.box -->
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="modalapagar">
+    <div class="modal fade" id="modal-apagar" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirmar Exclusão</h4>
+                </div>
+                <div class="modal-body" style="padding-bottom: 0px; text-align: center; font-size: 18px;">
+                    <div class="row">
+                        Tem certeza que deseja apagar essa vaquinha?
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a id="bottonExcluir" role="button" class="btn btn-danger">Excluir</a>
+                    <button type="button" class="btn btn-light" title="fecharApagar" id="fecharApagar" onclick="modalFecharApagar()">Não</button>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+
+
+    function listarParticipantes(id_cafe) {
+        $('#list_items_participantes').dataTable({
+            'bPaginate': true,
+            'bJQueryUI': true,
+            'bProcessing': true,
+            'bServerSide': true,
+            "searching": true,
+            'bDestroy': true,
+            'sAjaxSource': `@Url.Action("ParticipantesPagination", "Cafe")?id_cafe=${id_cafe}`,
+            'sServerMethod': 'POST',
+            'aoColumns': [
+                { 'mData': 'id' },
+                { 'mData': 'nome_usuario' },
+                { 'mData': 'status' }
+            ],
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/pt-BR.json"
+                }
+        });
+    }
+
+    function modalApagar(Id) {
+        $('#bottonExcluir').attr('href', `@Url.Action("Apagar","Cafe")?id=${Id}`);
+        $('#modal-apagar').modal('show');
+    }
+
+    function modalFecharApagar() {
+        $('#modal-apagar').modal('hide');
+    }
+
+    function modalDetalhes(id_cafe) {
+        removeForm();
+        BuscarDadosCafe(id_cafe);
+        exibirForm(id_cafe);
+        $('#modal-detalhes').modal('show');
+    }
+
+    function BuscarDadosCafe(id_cafe) {
+        $.ajax({
+            type: 'POST',
+            data: {
+                'id_cafe': id_cafe,
+            },
+            url: '@Url.Action("BuscarDadosCafe", "Arquivos")',
+            success: function (result) {
+                if (result.is_action) {
+                    $('#txtCafe').html(result.dados.nome);
+                    $('#txtPrazoPagamento').html(result.dados.prazo_Pagamento);
+                    $('#txtId').html(result.dados.id_Vaquinha_Cafe);
+                    $('#txtDescricao').html(result.dados.descricao);
+                    $('#txtChavePix').html(result.dados.chave_Pix);
+                    listarParticipantes(id_cafe);
+                }
+                else {
+                    $('#msgError #erroMsg').html(result.error);
+                }
+            },
+            error: function (error)
+            {
+                $('#msgError #erroMsg').html(result.error);
+            },
+            datatype: 'json'
+        });
+    }
+
+    function exibirForm(id_cafe) {
+        document.getElementById('exibirForm').innerHTML +=
+        `<form action="/Arquivos/UploadImagem?id_cafe=${id_cafe}" enctype="multipart/form-data" for="formFile" class="form-label row" method="post">` +
+            `<label for="formFile" class="dis-block txt3 hov1 p-r-30 p-l-30">Anexar comprovante de pagamento: </label>` +
+            `<input type="file" name="arquivos" id="formFile" multiple class="col-sm-9" />` +
+            `<button class="btn btn-warning ms-2 col-sm-3" style="width:20%">Participar</button>` +
+         `</form>`;
+    }
+
+    function removeForm() {
+        document.getElementById('exibirForm').innerHTML = '';
+    }
+
+    function fecharModal() {
+        $('#modal-detalhes').modal('hide');
+        $('#modal-exclusao').modal('hide');
+    }
+
+</script>
+
+
+
+
+
